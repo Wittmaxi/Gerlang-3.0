@@ -16,7 +16,10 @@ void handleInclude (std::vector<std::string>& input) {
 
 void handleDefine (std::vector<std::string>& input) {
 	if (input[counter].substr (0, 11) == "~definieren") {
-		
+		std::string definition = input[counter].substr (11, input [counter].size() -11);
+		if (definition == ) {
+
+		}
 	}
 }
 
