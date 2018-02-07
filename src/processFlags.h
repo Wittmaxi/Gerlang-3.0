@@ -1,4 +1,4 @@
-std::vector<char*> targets; 
+char* target; 
 char* out;
 
 bool doesFileExist(const char *fileName)
@@ -7,22 +7,24 @@ bool doesFileExist(const char *fileName)
     return infile.good();
 }
 
-void addTarget (char* target) {
+void addTarget (char* _target) {
 	if (doesFileExist(target)) {
-		targets.push_back (target);
+		target = _target;
 	} else {
-		std::cout << "Datei " << target << " wurde nicht gefunden. Compilation abgebrochen" << std::endl;
+		std::cout << "Datei " << _target << " wurde nicht gefunden. Compilation abgebrochen" << std::endl;
 		exit(-1);
 	}
 }
 
 void checkArgs (int argc, char** args) {
-	for(int i = 0; i < argc; i++) {
+	for(int i = 1; i < argc; i++) {
 		if (args[i] == "-a") {
 			out = args[i];
 		} else {
 			addTarget (args[i]); 
 		}
-
+	}
+	if (target == 0) {
+		exit (-1);
 	}
 }
