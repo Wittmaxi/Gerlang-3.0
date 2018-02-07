@@ -1,9 +1,10 @@
 size_t counter = 0;
 
 void handleInclude (std::vector<std::string>& input) {
-	if (input[counter].substr (0, 9) == "~einfügen") {
-		std::cout << input[counter] << std::endl;
-		std::string fileName;
+	if (input[counter].substr (0, 10) == "~einfügen") {
+		std::string fileName = input[counter].substr (10, input [counter].size() -10);
+		sanitize (fileName);
+		std::cout << fileName << std::endl;
 	}
 }
 

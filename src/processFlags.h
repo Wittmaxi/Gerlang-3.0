@@ -1,11 +1,6 @@
 char* target; 
 char* out;
 
-bool doesFileExist(const std::string file)
-{
-    std::ifstream infile {file};
-    return infile.good();
-}
 
 void addTarget (char* _target) {
 	std::string filename (_target);
