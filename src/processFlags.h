@@ -1,14 +1,16 @@
 char* target; 
 char* out;
 
-bool doesFileExist(const char *fileName)
+bool doesFileExist(const std::string file)
 {
-    std::ifstream infile(fileName);
+    std::ifstream infile {file};
     return infile.good();
 }
 
 void addTarget (char* _target) {
-	if (doesFileExist(target)) {
+	std::cout << _target << std::endl;
+	std::cout << std::string(target) << std::endl;
+	if (doesFileExist(std::string(target))) {
 		target = _target;
 	} else {
 		std::cout << "Datei " << _target << " wurde nicht gefunden. Compilation abgebrochen" << std::endl;
