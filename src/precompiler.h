@@ -14,8 +14,10 @@ void handleInclude (std::vector<std::string>& input) {
 	}
 }
 
-void handleDefine () {
-	
+void handleDefine (std::vector<std::string>& input) {
+	if (input[counter].substr (0, 11) == "~definieren") {
+		
+	}
 }
 
 void prec (std::vector<std::string>& input) {
