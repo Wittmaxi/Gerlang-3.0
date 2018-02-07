@@ -9,4 +9,5 @@ std::vector<std::string> cacheFile (char* target) {
 		file >> line;
 		output.push_back (line);
 	}
+	return output;
 }

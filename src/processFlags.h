@@ -8,9 +8,8 @@ bool doesFileExist(const std::string file)
 }
 
 void addTarget (char* _target) {
-	std::cout << _target << std::endl;
-	std::cout << std::string(target) << std::endl;
-	if (doesFileExist(std::string(target))) {
+	std::string filename (_target);
+	if (doesFileExist(filename)) {
 		target = _target;
 	} else {
 		std::cout << "Datei " << _target << " wurde nicht gefunden. Compilation abgebrochen" << std::endl;
