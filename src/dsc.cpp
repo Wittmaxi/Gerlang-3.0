@@ -3,14 +3,18 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <utility>
 
 #include "helpers.h"
 #include "processFlags.h"
 #include "precompiler.h"
 #include "lexer.h"
 
-std::vector<std::string> list_variables;
-std::vector<std::string> list_functions;
+std::vector<std::pair<std::string, int>> list_variables;
+std::vector<std::pair<std::string, int>> list_functions;
+std::vector<std::pair<std::string, int>> customTypeIndexes;
+std::vector<std::string> list_includes;
+std::vector<std::string> code_includes;
 std::vector<std::string> code_variables;
 std::vector<std::string> code_processes;
 

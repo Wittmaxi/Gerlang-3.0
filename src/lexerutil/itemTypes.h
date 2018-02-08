@@ -20,3 +20,9 @@ enum item {
 	CONST_INT,
 	CONST_FLOAT
 };
+
+std::vector <std::string> types {
+	"int",
+	"double",
+	"char"
+}

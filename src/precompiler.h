@@ -17,9 +17,10 @@ void handleInclude (std::vector<std::string>& input) {
 void handleDefine (std::vector<std::string>& input) {
 	if (input[counter].substr (0, 11) == "~definieren") {
 		std::string definition = input[counter].substr (11, input [counter].size() -11);
-		if (definition == ) {
-
-		}
+		std::pair<std::string, std::string> assign = findAssignements (definition);
+		std::string s1 = std::get <0> (assign);
+		std::string s2 = std::get <1> (assign);
+		code 
 	}
 }
 
@@ -31,4 +32,4 @@ void prec (std::vector<std::string>& input) {
 	for (size_t i = 0; i < input.size(); i++) {
 		std::cout << input[i] << std::endl;
 	}
-} 
+}
