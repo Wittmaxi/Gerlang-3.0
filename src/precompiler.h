@@ -23,7 +23,11 @@ void handleDefine (std::vector<std::string>& input) {
 		std::string s1 = std::get <0> (assign);
 		std::string s2 = std::get <1> (assign);
 		if (isString (s2)) {
-			generateVar (s1, getStr(s2), 2, true);
+			if (s2.size() > 1) {
+				generateVar (s1, s2, 2, true, true);
+			} else {
+				generateVar (s1, s2, 2, true, false);
+			}
 		}
 	}
 }
