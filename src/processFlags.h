@@ -7,7 +7,7 @@ void addTarget (char* _target) {
 	if (doesFileExist(filename)) {
 		target = _target;
 	} else {
-		std::cout << "Datei " << _target << " wurde nicht gefunden. Compilation abgebrochen" << std::endl;
+		std::cout << "DSC | Datei " << _target << " wurde nicht gefunden. Compilation abgebrochen" << std::endl;
 		exit(-1);
 	}
 }
@@ -22,6 +22,7 @@ void checkArgs (int argc, char** args) {
 		}
 	}
 	if (target == 0) {
+		std::cout << "DSC | Keine Eingabedatei gefunden" << std::endl;
 		exit (-1);
 	}
 }
