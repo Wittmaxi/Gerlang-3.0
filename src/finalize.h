@@ -6,8 +6,11 @@ void genMain () {
 	finalCode.push_back ("}");
 }
 
-void writeToFile () {
-
+void writeToOutFile () {
+	std::ofstream outFile (std::string(out), std::ofstream::out);
+	for (auto i : finalCode) {
+		outFile << i << std::endl;
+	}
 }
 
 void finalize () {
@@ -15,5 +18,6 @@ void finalize () {
 	finalCode.insert (finalCode.end(), code_variables.begin(), code_variables.end());
 	finalCode.insert (finalCode.end(), code_processes.begin(), code_processes.end());
 	genMain();
+	writeToOutFile();
 	printVect (finalCode);
 }
