@@ -19,5 +19,4 @@ void finalize () {
 	finalCode.insert (finalCode.end(), code_processes.begin(), code_processes.end());
 	genMain();
 	writeToOutFile();
-	printVect (finalCode);
 }
