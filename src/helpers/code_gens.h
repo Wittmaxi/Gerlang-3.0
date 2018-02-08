@@ -4,11 +4,19 @@ void generateVar (std::string name, std::string content, int typeIndex, bool isC
 	if (isConst) {
 		code += "const ";
 	}
-	code += name;
+	code += types[typeIndex];
 	if (isArray) {
-		code += "[]";
+		code += "[] ";
 	}
+	code += name;
 	code += "=" + content;
 	std::cout << "PUSHD BACK" << std::endl;
 	code_variables.push_back (code);
+}
+
+void addInclude (std::string include) {
+	if (!(isInVec <std::string> (include, list_includes))) {
+		list_includes.push_back (include);
+		code_includes.push_back ("#include <" + include + ">");
+	}
 }

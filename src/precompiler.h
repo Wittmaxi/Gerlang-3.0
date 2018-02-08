@@ -11,6 +11,14 @@ void handleInclude (std::vector<std::string>& input) {
 		} else {
 			std::cout << "Präcompiler | Zeile " << counter << " | Datei " << fileName << " wurde nicht gefunden " << std::endl;
 		}
+		counter --;
+	}
+}
+
+void handlePrint (std::vector <std::string>& input) {
+	if (input[counter].substr (0, 10) == "~schreiben") {
+		code_mainFunction.push_back ("std::cout <<\"" + input[counter].substr (12, input[counter].size() - 11) + "\"<<std::endl;");
+		addInclude ("iostream");
 	}
 }
 
@@ -18,6 +26,7 @@ void handleDefine (std::vector<std::string>& input) {
 	if (input[counter].substr (0, 11) == "~definieren") {
 		std::cout << "wird definiert" << std::endl;
 		std::string definition = input[counter].substr (11, input [counter].size() -11);
+		input.erase (input.begin() + counter);
 		definition = sanitize (definition);
 		std::pair<std::string, std::string> assign = findAssignements (definition);
 		std::string s1 = std::get <0> (assign);
@@ -38,6 +47,7 @@ void prec (std::vector<std::string>& input) {
 	for (; counter < input.size(); counter++) {
 		handleInclude (input);
 		handleDefine (input);
+		handlePrint (input);
 	}
 	for (size_t i = 0; i < input.size(); i++) {
 		std::cout << input[i] << std::endl;

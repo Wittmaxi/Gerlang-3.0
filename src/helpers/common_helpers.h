@@ -31,3 +31,13 @@ void printVect (std::vector<std::string> T) {
 		std::cout << i << std::endl;
 	}
 }
+
+template<typename T>
+bool isInVec (T input, std::vector<T> inputVec) {
+	for (auto i: inputVec) {
+		if (i == input) {
+			return true;
+		}
+	}
+	return false;
+}

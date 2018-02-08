@@ -12,7 +12,9 @@ std::vector<std::string> list_includes;
 std::vector<std::string> code_includes;
 std::vector<std::string> code_variables;
 std::vector<std::string> code_processes;
+std::vector<std::string> code_mainFunction;
 
+#include "lexerutil/itemTypes.h"
 #include "helpers.h"
 #include "processFlags.h"
 #include "precompiler.h"
@@ -26,4 +28,5 @@ int main (int argc, char** args) {
 	printVect (code_includes);
 	printVect (code_variables);
 	printVect (code_processes);
+	printVect (code_mainFunction);
 }
