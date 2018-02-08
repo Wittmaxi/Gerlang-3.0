@@ -23,4 +23,7 @@ int main (int argc, char** args) {
 	std::vector<std::string> file = cacheFile (target);
 	prec (file);
 	lex (file);
+	printVect (code_includes);
+	printVect (code_variables);
+	printVect (code_processes);
 }

@@ -25,3 +25,9 @@ std::string sanitize (std::string input) {
 	}
 	return retStr;
 }
+
+void printVect (std::vector<std::string> T) {
+	for (auto i : T) {
+		std::cout << i << std::endl;
+	}
+}

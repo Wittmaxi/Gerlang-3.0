@@ -1,15 +1,15 @@
 std::pair <std::string, std::string> findAssignements (std::string line) {
 	std::string s1;
 	std::string s2;
-	bool afterOperator;
+	bool afterOperator = false;
 	for (size_t i = 0; i < line.size(); i++)  {
 		if (line[i] == '=') {
-			afterOperator != afterOperator;
+			afterOperator = true;
 		} else {
 			if (afterOperator) {
-				s1 += line[i];
-			} else {
 				s2 += line[i];
+			} else {
+				s1 += line[i];
 			}
 		}
 	}
@@ -18,6 +18,7 @@ std::pair <std::string, std::string> findAssignements (std::string line) {
 }
 
 bool isString (std::string input) {
+	std::cout << input << std::endl;
 	return ((input[0] == '\"') and (input[input.size()-1] == '\"'));
 }
 
