@@ -25,5 +25,10 @@ std::string getStr (std::string input) {
 }
 
 bool varExists (std::string varName) {
-	return isInVec <std::string> (varName, list_var)
+	for (size_t i = 0; i < list_variables.size(); i++) {
+		if (std::get <0> (list_variables[i]) == varName) {
+			return true;
+		}
+	}
+	return false;
 }

@@ -1,4 +1,4 @@
-size_t counter = 0;
+int counter = 0;
 
 void handleInclude (std::vector<std::string>& input) {
 	if (input[counter].substr (0, 10) == "~einfügen") {
@@ -17,8 +17,13 @@ void handleInclude (std::vector<std::string>& input) {
 
 void handlePrint (std::vector <std::string>& input) {
 	if (input[counter].substr (0, 10) == "~schreiben") {
-		code_mainFunction.push_back ("std::cout <<\"" + input[counter].substr (11, input[counter].size() - 11) + "\"<<std::endl;");
-		addInclude ("iostream");
+		if (varExists(input[counter].substr (11, input[counter].size() - 11))) {
+			code_mainFunction.push_back ("std::cout <<" + input[counter].substr (11, input[counter].size() - 11) + "<<std::endl;");	
+			addInclude ("iostream");		
+		} else {
+			code_mainFunction.push_back ("std::cout <<\"" + input[counter].substr (11, input[counter].size() - 11) + "\"<<std::endl;");
+			addInclude ("iostream");
+		}
 	}
 }
 
@@ -43,8 +48,10 @@ void handleDefine (std::vector<std::string>& input) {
 void prec (std::vector<std::string>& input) {
 	counter = 0; //prolly not needed
 	for (; counter < input.size(); counter++) {
-		handleInclude (input);
-		handleDefine (input);
-		handlePrint (input);
+		if (input[counter] != "") {
+			handleDefine (input);
+			handlePrint (input);
+			handleInclude (input);
+		}
 	}
 }

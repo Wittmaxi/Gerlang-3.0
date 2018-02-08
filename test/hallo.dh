@@ -1,3 +1,4 @@
 
 ~schreiben HALLO
 ~definieren zwei = "2 + 2 = 4"
+~schreiben zwei

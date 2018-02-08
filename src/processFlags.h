@@ -14,8 +14,9 @@ void addTarget (char* _target) {
 
 void checkArgs (int argc, char** args) {
 	for(int i = 1; i < argc; i++) {
+		std::cout << args[i] << std::endl;
 		if (args[i] == "-a") {
-			out = args[i];
+			out = args[++i];
 		} else {
 			addTarget (args[i]); 
 		}
