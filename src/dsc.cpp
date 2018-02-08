@@ -19,14 +19,12 @@ std::vector<std::string> code_mainFunction;
 #include "processFlags.h"
 #include "precompiler.h"
 #include "lexer.h"
+#include "finalize.h"
 
 int main (int argc, char** args) {
 	checkArgs (argc, args);
 	std::vector<std::string> file = cacheFile (target);
 	prec (file);
 	lex (file);
-	printVect (code_includes);
-	printVect (code_variables);
-	printVect (code_processes);
-	printVect (code_mainFunction);
+	finalize();
 }

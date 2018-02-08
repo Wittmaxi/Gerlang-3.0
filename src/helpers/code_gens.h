@@ -6,11 +6,10 @@ void generateVar (std::string name, std::string content, int typeIndex, bool isC
 	}
 	code += types[typeIndex];
 	if (isArray) {
-		code += "[] ";
+		code += "[]";
 	}
-	code += name;
-	code += "=" + content;
-	std::cout << "PUSHD BACK" << std::endl;
+	code += " " + name;
+	code += " = " + content;
 	code_variables.push_back (code);
 }
 

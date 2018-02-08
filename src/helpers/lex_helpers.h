@@ -13,16 +13,17 @@ std::pair <std::string, std::string> findAssignements (std::string line) {
 			}
 		}
 	}
-	std::cout << "string = " << s1 << s2 << std::endl;
 	return std::make_pair (s1, s2);
 }
 
 bool isString (std::string input) {
-	std::cout << input << std::endl;
 	return ((input[0] == '\"') and (input[input.size()-1] == '\"'));
 }
 
 std::string getStr (std::string input) {
-	std::cout << "STRING = " << input.substr (1, input.size() -2);
 	return input.substr (1, input.size() -2);
+}
+
+bool varExists (std::string varName) {
+	return isInVec <std::string> (varName, list_var)
 }

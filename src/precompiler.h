@@ -17,14 +17,13 @@ void handleInclude (std::vector<std::string>& input) {
 
 void handlePrint (std::vector <std::string>& input) {
 	if (input[counter].substr (0, 10) == "~schreiben") {
-		code_mainFunction.push_back ("std::cout <<\"" + input[counter].substr (12, input[counter].size() - 11) + "\"<<std::endl;");
+		code_mainFunction.push_back ("std::cout <<\"" + input[counter].substr (11, input[counter].size() - 11) + "\"<<std::endl;");
 		addInclude ("iostream");
 	}
 }
 
 void handleDefine (std::vector<std::string>& input) {
 	if (input[counter].substr (0, 11) == "~definieren") {
-		std::cout << "wird definiert" << std::endl;
 		std::string definition = input[counter].substr (11, input [counter].size() -11);
 		input.erase (input.begin() + counter);
 		definition = sanitize (definition);
@@ -32,8 +31,7 @@ void handleDefine (std::vector<std::string>& input) {
 		std::string s1 = std::get <0> (assign);
 		std::string s2 = std::get <1> (assign);
 		if (isString (s2)) {
-			std::cout << "IS STRING" << std::endl;
-			if (s2.size() > 1) {
+			if (getStr(s2).size() > 1) {
 				generateVar (s1, s2, 2, true, true);
 			} else {
 				generateVar (s1, s2, 2, true, false);
@@ -48,8 +46,5 @@ void prec (std::vector<std::string>& input) {
 		handleInclude (input);
 		handleDefine (input);
 		handlePrint (input);
-	}
-	for (size_t i = 0; i < input.size(); i++) {
-		std::cout << input[i] << std::endl;
 	}
 }
