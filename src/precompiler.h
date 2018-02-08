@@ -16,11 +16,15 @@ void handleInclude (std::vector<std::string>& input) {
 
 void handleDefine (std::vector<std::string>& input) {
 	if (input[counter].substr (0, 11) == "~definieren") {
+		std::cout << "wird definiert" << std::endl;
 		std::string definition = input[counter].substr (11, input [counter].size() -11);
+		definition = sanitize (definition);
 		std::pair<std::string, std::string> assign = findAssignements (definition);
 		std::string s1 = std::get <0> (assign);
 		std::string s2 = std::get <1> (assign);
-		code 
+		if (isString (s2)) {
+			generateVar (s1, getStr(s2), 2, true);
+		}
 	}
 }
 
@@ -28,6 +32,7 @@ void prec (std::vector<std::string>& input) {
 	counter = 0; //prolly not needed
 	for (; counter < input.size(); counter++) {
 		handleInclude (input);
+		handleDefine (input);
 	}
 	for (size_t i = 0; i < input.size(); i++) {
 		std::cout << input[i] << std::endl;

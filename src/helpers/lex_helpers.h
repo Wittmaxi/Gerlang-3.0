@@ -3,7 +3,7 @@ std::pair <std::string, std::string> findAssignements (std::string line) {
 	std::string s2;
 	bool afterOperator;
 	for (size_t i = 0; i < line.size(); i++)  {
-		if (&line[i] == "=") {
+		if (line[i] == '=') {
 			afterOperator != afterOperator;
 		} else {
 			if (afterOperator) {
@@ -13,6 +13,7 @@ std::pair <std::string, std::string> findAssignements (std::string line) {
 			}
 		}
 	}
+	std::cout << "string = " << s1 << s2 << std::endl;
 	return std::make_pair (s1, s2);
 }
 

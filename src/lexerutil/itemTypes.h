@@ -25,4 +25,4 @@ std::vector <std::string> types {
 	"int",
 	"double",
 	"char"
-}
+};
