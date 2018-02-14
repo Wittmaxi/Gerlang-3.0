@@ -14,8 +14,8 @@ std::vector<std::string> code_variables;
 std::vector<std::string> code_processes;
 std::vector<std::string> code_mainFunction;
 
-
 #include "lexerutil/itemTypes.h"
+#include "lexerutil/section.h"
 #include "helpers.h"
 #include "processFlags.h"
 #include "precompiler.h"
