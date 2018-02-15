@@ -32,3 +32,61 @@ bool varExists (std::string varName) {
 	}
 	return false;
 }
+
+int varIndex (std::string varName) {
+	for (size_t i = 0; i < list_variables.size(); i++) {
+		if (std::get <0> (list_variables[i]) == varName) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+bool typeExists (std::string typeName) {
+	for (size_t i = 0; i < types.size(); i++) {
+		if (types[i] == typeName) {
+			return true;
+		}
+	}
+	return false;
+}
+
+int typeIndex (std::string typeName) {
+	for (size_t i = 0; i < types.size(); i++) {
+		if (types[i] == typeName) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+bool isOperator (char op) {
+	switch (op) {
+		case '+':
+		case '-':
+		case '/':
+		case '*':
+		case '%':
+			{
+				return true;
+				break;
+			}
+		default:
+			{
+				return false;
+			}
+	}
+}
+
+items getOperator (char op) {
+	switch (op) {
+		case '+':
+			return items::OPERATOR_PLUS;
+			break;
+		case '-':
+		case '/':
+		case '*':
+		case '%':
+			break;
+	}
+}

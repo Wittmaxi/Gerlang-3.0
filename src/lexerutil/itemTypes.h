@@ -1,10 +1,11 @@
 enum class items{
-	BEGIN_FUNC = "anfang",//the entire document - more like a "wrapper"
-	END = "ende",
-	FUNCTION_DECL = "funktion",
-	FUNC_TYPE_1 = "gibt",
-	FUNCT_TYPE_2 = "zurück",
-	RVAL	
+	BEGIN_FUNC,//the entire document - more like a "wrapper"
+	END,
+	FUNCTION_DECL,
+	FUNC_TYPE_1,
+	FUNCT_TYPE_2,
+	RVAL,
+	OPERATOR_PLUS
 };
 
 std::vector <std::string> types {
