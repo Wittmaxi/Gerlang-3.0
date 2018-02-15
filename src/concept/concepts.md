@@ -54,7 +54,7 @@ STATEMENTS:
 example: 
 ```
 anfang
-	#
+	#code
 ende
 ```
 
@@ -67,11 +67,76 @@ It implies a scope.
 
 Example:
 ```
-funktion sinus gibt fliesskommazahl zurück
+funktion sinus gibt fliesskomma zurück
 	#code
 ende
 ```
 
+==============================
+
+```wenn```
+
+```wenn``` is used for conditional execution. It implies a scope and requires a boolean as operator. 
+
+example: 
+```
+wenn (wahr)
+	#code
+ende
+```
+
+==============================
+
+Variable declarations
+
+Variables are declared like so:
+
+```[type] variable [name] (= [rvalue])```
+
+it has not to be assigned an rvalue. 
+
+example: 
+
+```boolesche variable hallo = wahr```
+
+=============================
+
+```solange```
+
+```solange``` is used for multiple executions of code. It requires a boolean operator and implies a scope.
+
+example: 
+```
+solange (wahr) 
+	#code
+ende
+```
+
+=============================
+
+Inline C++
+
+In order to use inline C++, you use ```c++```. It implies a scope although it is solely to be used for C++ code. If variables from the outside scope are to be used, they have <br>
+to be marked by a $.
+
+example: 
+
+```
+boolesche variable hallo = wahr
+c++
+	somefunction ($hallo)
+	#more code
+ende
+```
+
+=============================
+
+Variable types
+
+```boolesche``` - possible rvalues: ```wahr``` or ```falsch``` - equivalent to bool in C++
+```integer``` - possible rvalues: any 4bit (positive or negative) integral value - equivalent to int in C++
+```charakter``` - possible rvalues: any 1bit integral value or single characters - equivalent to char in C++
+```fliesskomma``` - possible rvalues: any 8bit (positive or negative) value - equivalent to "double" in C++ 
 
 ## Standard - Library
 
