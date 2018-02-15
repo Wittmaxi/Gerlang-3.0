@@ -26,5 +26,8 @@ int main (int argc, char** args) {
 	std::vector<std::string> file = cacheFile (target);
 	prec (file);
 	lex (file);
+	for (auto i: lexer_output) {
+		std::cout << i.code << std::endl;
+	}
 	finalize();
 }

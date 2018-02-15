@@ -24,6 +24,8 @@ void handlePrint (std::vector <std::string>& input) {
 			code_mainFunction.push_back ("std::cout <<\"" + input[counter].substr (11, input[counter].size() - 11) + "\"<<std::endl;");
 			addInclude ("iostream");
 		}
+		input.erase (input.begin() + counter);
+		counter --;
 	}
 }
 
@@ -42,6 +44,8 @@ void handleDefine (std::vector<std::string>& input) {
 				generateVar (s1, s2, 2, true, false);
 			}
 		}
+		input.erase (input.begin() + counter);
+		counter --;
 	}
 }
 

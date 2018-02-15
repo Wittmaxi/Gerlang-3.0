@@ -8,6 +8,17 @@ enum class items{
 	OPERATOR_PLUS
 };
 
+class item {
+public: 
+	item (items _item, std::string _code) {
+		holded_item = _item;
+		code = _code;
+	}
+
+	items holded_item; 
+	std::string code;	
+};
+
 std::vector <std::string> types {
 	"int",
 	"double",

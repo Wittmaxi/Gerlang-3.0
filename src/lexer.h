@@ -1,19 +1,22 @@
-std::vector <items> output; 
-std::vector <std::string> rvals;
-std::vector <std::string> varnames;
+std::vector <item> lexer_output; 
 std::string accum = ""; //accumulates the parse
 
+void addItem (item _input) {
+	accum = "";
+	lexer_output.push_back (_input);
+}
+
 void find () {
+	accum = sanitize(accum);
+	std::cout << "accum = " << accum << std::endl;
 	if (accum == "anfang") {
-		output.push_back (items::BEGIN_FUNC);
+		addItem (item(items::BEGIN_FUNC, accum));
 	}
 	if (accum == "ende") {
-		output.push_back (items::END);
+		addItem (item(items::END, accum));
 	}
-	if (isOperator(accum [accum.size() -1])) {
-		output.push_back (items::RVAL);
-		output.push_back (getOperator (accum [accum.size() -1]));
-		rvals.push_back (accum.substr (0, accum.size() -2));
+	if (isOperator(accum.c_str()[0])) {
+		addItem (item(getOperator (accum.c_str()[0]), accum));
 	}
 }
 
@@ -21,6 +24,7 @@ void lex (std::vector<std::string>& input) {
 	for (auto i : input) {
 		for (int j = 0; j < i.size(); j++) {
 			accum += i[j];
+			find ();
 		}
 	}
 }
