@@ -18,8 +18,9 @@ Precompiler directives are implyed by a tilde (~).
 
 copies an external file into the currently compiled file. Is first searched in the standard folder, then relatively from the compiler file. <br>
 example: 
+
 ```~einfügen funktion1.dh```
---------------------
+
 ```~definieren```
 
 defines a constant variable. 
