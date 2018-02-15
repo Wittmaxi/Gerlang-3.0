@@ -131,11 +131,14 @@ ende
 
 =============================
 
-Variable types
+VARIABLE TYPES
 
 ```boolesche``` - possible rvalues: ```wahr``` or ```falsch``` - equivalent to bool in C++
+
 ```integer``` - possible rvalues: any 4bit (positive or negative) integral value - equivalent to int in C++
+
 ```charakter``` - possible rvalues: any 1bit integral value or single characters - equivalent to char in C++
+
 ```fliesskomma``` - possible rvalues: any 8bit (positive or negative) value - equivalent to "double" in C++ 
 
 ## Standard - Library
