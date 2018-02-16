@@ -141,6 +141,15 @@ VARIABLE TYPES
 
 ```fliesskomma``` - possible rvalues: any 8bit (positive or negative) value - equivalent to "double" in C++ 
 
+============================
+
+ASSIGNMENTS
+
+a variable can be assigned any r or lvalue with the = operator.
+
+example: 
+```[name] = [rvalue]```
+
 ## Standard - Library
 
 ### Version 1

@@ -25,6 +25,10 @@ void lex (std::vector<std::string>& input) {
 		for (int j = 0; j < i.size(); j++) {
 			accum += i[j];
 			find ();
+			if (accum == "#") {
+				accum = "";
+				break;
+			}
 		}
 	}
 }
