@@ -62,15 +62,31 @@ ende
 
 ```funktion```
 
-```funktion``` defines a later usable function. It has a name and a return type which are indicated like so: ```funktion [name] gibt [type] zurück```.
+```funktion``` defines a later usable function. It has a name, variable declarations for input a return type which are indicated like so: ```funktion [name] ([variables]) gibt [type] zurück```.
 It implies a scope.
 
 Example:
 ```
-funktion sinus gibt fliesskomma zurück
+funktion sinus (integer variable input, integer variable input2) gibt fliesskomma zurück
 	#code
 ende
 ```
+
+==============================
+
+```gebe [variable] zurück```
+
+This enables the programmer to return a variable out of a function. May not be used in anonymous scopes. Stops execution of the current scope.
+Example:
+```
+funktion sinus (fliesskomma variable input) gibt fliesskomma zurück
+	fliesskomma variable output
+	#calculate output
+	gebe output zurück
+ende
+
+```
+
 
 ==============================
 
@@ -137,6 +153,14 @@ VARIABLE TYPES
 ```charakter``` - possible rvalues: any 1bit integral value or single characters - equivalent to char in C++
 
 ```fliesskomma``` - possible rvalues: any 8bit (positive or negative) value - equivalent to "double" in C++ 
+
+Arrays: arrays can be implied with [] and the length. Leave empty for no special length. They can be instantly defined by a "{"
+example: 
+
+```
+fliesskomma variable array [4] = {1, 3, 4, 6}
+fliesskomma variable array [] 
+```
 
 ============================
 
