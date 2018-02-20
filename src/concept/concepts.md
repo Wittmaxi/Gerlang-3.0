@@ -116,18 +116,15 @@ ende
 
 Inline C++
 
-In order to use inline C++, you use ```c++```. It implies a scope although it is solely to be used for C++ code. If variables from the outside scope are to be used, they have <br>
-to be marked by a $.
-
-example: 
+Inline C++ can be called with 
 
 ```
-boolesche variable hallo = wahr
-c++
-	somefunction ($hallo)
-	#more code
+C++
+	#code
 ende
 ```
+
+Variables defined in the same scope can be called in the C++ call.
 
 =============================
 
@@ -155,3 +152,17 @@ example:
 ### Version 1
 
 No stl
+
+## Conventions
+
+### Indentation
+Both tabs and spaces are understood by the compiler - it is discouraged though to use spaces for indentation
+
+### formatting
+Every keyword and operator should be separated by a space. 
+
+### C++ calls
+C++ should ONLY be called inside of the standard library and in other projects. The C++ may require external libraries.
+
+### Scopes
+Variables should be declared in the smallest possible scope.
