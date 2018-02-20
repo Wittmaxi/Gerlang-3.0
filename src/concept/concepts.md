@@ -67,7 +67,7 @@ It implies a scope.
 
 Example:
 ```
-funktion sinus (integer variable input, integer variable input2) gibt fliesskomma zurück
+funktion sinus (ganzzahl variable input, ganzzahl variable input2) gibt fliesskomma zurück
 	#code
 ende
 ```
@@ -148,7 +148,7 @@ VARIABLE TYPES
 
 ```boolesche``` - possible rvalues: ```wahr``` or ```falsch``` - equivalent to bool in C++
 
-```integer``` - possible rvalues: any 4bit (positive or negative) integral value - equivalent to int in C++
+```ganzzahl``` - possible rvalues: any 4bit (positive or negative) integral value - equivalent to int in C++
 
 ```charakter``` - possible rvalues: any 1bit integral value or single characters - equivalent to char in C++
 
