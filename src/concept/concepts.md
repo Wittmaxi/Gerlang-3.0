@@ -76,7 +76,7 @@ ende
 
 ```gebe [variable] zurück```
 
-This enables the programmer to return a variable out of a function. May not be used in anonymous scopes. Stops execution of the current scope.
+This enables the programmer to return a variable or rvalue out of a function. May not be used in anonymous scopes. Stops execution of the current scope.
 Example:
 ```
 funktion sinus (fliesskomma variable input) gibt fliesskomma zurück
@@ -162,6 +162,40 @@ fliesskomma variable array [4] = {1, 3, 4, 6}
 fliesskomma variable array [] 
 ```
 
+Pointers:
+
+If you want to declare a variable, you add in ```zeiger``` after the type.
+
+Example:
+```
+charakter zeiger variable text = "HALLO"
+```
+
+The variable has as value its location in memory and can be assigned any rvalue.
+To get its real value, it has to be dereferenced with ```*```.
+
+============================
+
+function calls
+
+To call a function it has to be given statements as inputs. Its output may be used as a normal lvalue.
+
+Example:
+
+```
+funktion sinus_times_pi (ganzzahl variable input) gibt fliesskomma zurück
+	gebe (sinus (input) * 3.14) zurück
+ende
+
+
+sinus_times_pi (24) #nothing happens
+
+ganzzahl variable something = sinus_times_pi (24)
+
+function_that_prints_stuff (something)
+
+```
+
 ============================
 
 ASSIGNMENTS
@@ -170,6 +204,49 @@ a variable can be assigned any r or lvalue with the = operator.
 
 example: 
 ```[name] = [rvalue]```
+
+============================
+
+
+MATHEMATICAL OPERATORS
+
+```*``` multiplication
+
+```-``` subtraction
+
+```/``` division
+
+```+``` addition
+
+adds two lvalues, two rvalues or one rvalue and one lvalue together, gets replaced as the output of the calculation for later.
+
+example: 
+
+```
+ganzzahl variable hi2 = 2
+ganzzahl variable hi3 = 1
+
+ganzzahl variable hi5 = hi2 + hi3
+
+hi2 = hi3 / hi5
+``` 
+
+## Context Free Grammar
+
+precompiler statements, comments and white space are not accounted for
+
+### BEGIN OF FILE: 
+-Infinite amount of ```functions``` or exactly one ```main function```<br>
+-End of File<br>
+
+### functions and main functions
+-"funktion" + identifier + "(" + variable declaration + "," + ... + ")" + "gibt" + type_identifier + "zurück" + scope + "ende" <br>
+-"funktion" + identifier + "()" + "gibt" + type_identifier + "zurück" + scope + "ende"
+-"haupt" + scope + "ende"
+
+### scope
+-operation
+-""
 
 ## Standard - Library
 
@@ -190,3 +267,6 @@ C++ should ONLY be called inside of the standard library and in other projects. 
 
 ### Scopes
 Variables should be declared in the smallest possible scope.
+
+### Pointers 
+Pointers are discouraged because of the problems they can produce [vulnerabilities, runtime errors, etc].
