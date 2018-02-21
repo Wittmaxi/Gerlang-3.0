@@ -292,6 +292,10 @@ integer_litteral
 OR
 boolean_litteral
 
+### identifier
+
+name with only letters and numbers
+
 ### boolean statement
 
 ## Standard - Library

@@ -11,11 +11,18 @@ enum class items{
 class item {
 public: 
 	item (items _item, std::string _code) {
-		holded_item = _item;
+		held_item = _item;
 		code = _code;
 	}
 
-	items holded_item; 
+	item (items _item, std::string _code, item _subitem) {
+		held_item = _item;
+		code = _code;
+		subItem.push_back(_subitem);
+	}
+
+	items held_item; 
+	std::vector <item*> subItems = NULL;
 	std::string code;	
 };
 
