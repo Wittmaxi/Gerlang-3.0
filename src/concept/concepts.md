@@ -233,20 +233,36 @@ hi2 = hi3 / hi5
 
 ## Context Free Grammar
 
-precompiler statements, comments and white space are not accounted for
+precompiler statements, comments and white space are not accounted for, always for the latest version
 
 ### BEGIN OF FILE: 
--Infinite amount of ```functions``` or exactly one ```main function```<br>
+-Infinite amount of ```functions``` and exactly one ```main function```<br>
+-infinitely: variable declaration
 -End of File<br>
 
-### functions and main functions
+### functions
 -"funktion" + identifier + "(" + variable declaration + "," + ... + ")" + "gibt" + type_identifier + "zurück" + scope + "ende" <br>
+OR<br>
 -"funktion" + identifier + "()" + "gibt" + type_identifier + "zurück" + scope + "ende"
--"haupt" + scope + "ende"
+
+### main function
+-"anfang" + scope + "ende"
 
 ### scope
--operation
--""
+-infinitely: operations <br>
+-infinitely: "wenn" + "(" + boolean statement + ")" + nameless_scope + "ende"<br>
+-infinitely: "solange" + "(" + boolean statement + ")" + nameless_scope + "ende"<br>
+-infinitely: functions<br>
+-infinitely: variable declaration <br>
+-once: "gebe" + value + "zurück"
+
+### operations
+
+identifier + "=" + value + operator + value (+ operator + value ...) 
+
+### value
+identifier
+OR
 
 ## Standard - Library
 
