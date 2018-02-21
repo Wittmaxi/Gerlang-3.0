@@ -256,13 +256,43 @@ OR<br>
 -infinitely: variable declaration <br>
 -once: "gebe" + value + "zurück"
 
+### nameless scope
+-infinitely: operations <br>
+-infinitely: "wenn" + "(" + boolean statement + ")" + nameless_scope + "ende"<br>
+-infinitely: "solange" + "(" + boolean statement + ")" + nameless_scope + "ende"<br>
+-infinitely: functions<br>
+-infinitely: variable declaration <br>
+
 ### operations
 
-identifier + "=" + value + operator + value (+ operator + value ...) 
+identifier + "=" + value + operator + value
+OR
+identifier + "=" + value + operator + operation
+
+### boolean statement
+value + "==" + value
+OR
+value + "!=" + value 
+OR
+boolean_litteral
+
+### variable declaration
+type_identifier + "variable" + identifier 
+OR
+type_identifier + "variable" + identifier + "=" + value
 
 ### value
 identifier
 OR
+character_litteral
+OR
+float_litteral
+OR
+integer_litteral
+OR
+boolean_litteral
+
+### boolean statement
 
 ## Standard - Library
 
