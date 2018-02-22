@@ -90,3 +90,12 @@ items getOperator (char op) {
 			break;
 	}
 }
+
+std::string removeComments (std::string input) {
+	std::string outputString;
+	for (int i = 0; i < input.size(); i++) {
+		if (input[i] == '#') {return outputString;}
+		outputString += input[i];
+	}
+	return outputString;
+}
