@@ -26,7 +26,5 @@ int main (int argc, char** args) {
 	std::vector<std::string> file = cacheFile (target);
 	prec (file);
 	lex (file);
-	std::cout << "hello #hi -> " << removeComments (std::string("hello #hi"));
-	std::cout << "hello -> " << removeComments (std::string("hello"));
 	finalize();
 }

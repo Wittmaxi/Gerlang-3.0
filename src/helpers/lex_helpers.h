@@ -26,6 +26,7 @@ std::string getStr (std::string input) {
 
 bool varExists (std::string varName) {
 	for (size_t i = 0; i < list_variables.size(); i++) {
+		std::cout << std::get<0> (list_variables[i]) << std::endl;
 		if (std::get <0> (list_variables[i]) == varName) {
 			return true;
 		}
@@ -91,7 +92,7 @@ items getOperator (char op) {
 	}
 }
 
-std::string removeComments (std::string input) {
+	std::string removeComments (std::string input) {
 	std::string outputString;
 	for (int i = 0; i < input.size(); i++) {
 		if (input[i] == '#') {return outputString;}

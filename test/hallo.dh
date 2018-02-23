@@ -2,7 +2,9 @@
 ~schreiben HALLO
 ~definieren zwei = "2 + 2 = 4"
 ~schreiben zwei
+~definieren drei = '3'
 ~schreiben HALLO WELT
+~schreiben drei
 
 anfang
 
