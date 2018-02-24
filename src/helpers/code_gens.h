@@ -1,8 +1,7 @@
 void generateVar (std::string name, std::string content, int typeIndex, bool isConst, bool isArray, int arraySize = 0) {
 	std::string code;
 	list_variables.push_back (make_pair (name, typeIndex));
-	std::cout << list_variables.size() << std::endl;
-	if (isConst) {
+		if (isConst) {
 		code += "const ";
 	}
 	code += types[typeIndex] + " " + name;

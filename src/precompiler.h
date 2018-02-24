@@ -49,7 +49,6 @@ void handleDefine (std::vector<std::string>& input) {
 void prec (std::vector<std::string>& input) {
 	counter = 0; //prolly not needed
 	for (; counter < input.size(); counter++) {
-		std::cout << input[counter] << std::endl;
 		if (input[counter] != "") {
 			handleDefine (input);
 			handlePrint (input);

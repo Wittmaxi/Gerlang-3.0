@@ -1,21 +1,29 @@
-std::vector <item> lexer_output; 
+std::vector <std::tuple <items, std::string> > output;
 std::vector<std::string> *file;
-item begin_of_file (items::BEGIN_OF_FILE, "");
-int position;
+int line, col;
 
-void findMainFunction () {
-	if (true);
+void readTilNextExpr () {
+	int i = col;
+	for (; i < file->at(line).size(); i++) {
+		
+	}	
 }
 
-void findFunction () {
-	if (true) {
-
+void evalExpression (std::string expression) {
+	if (expression == "funktion") {
+	
 	}
 }
 
 void find () {
-	for (; position < file->size(); position++) {
-		findFunction ();
+	line = col = 0;
+	for (; line < file->size(); line ++) {
+		for (; col < file->at (line).size(); col++) {
+			int before = col;
+			readTilNextExpr();
+		        std::string currentExpression = file->at(line).substr(before, col);
+			evalExpression (currentExpression);
+		}
 	}
 }
 

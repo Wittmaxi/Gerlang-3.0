@@ -4,6 +4,7 @@
 #include <fstream>
 #include <vector>
 #include <utility>
+#include <tuple>
 
 std::vector<std::pair<std::string, int>> list_variables;
 std::vector<std::pair<std::string, int>> list_functions;
