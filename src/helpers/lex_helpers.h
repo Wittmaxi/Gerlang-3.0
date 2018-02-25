@@ -109,17 +109,26 @@ std::string sanitizeFile (std::vector<std::string> file) { //takes a file, remov
 	for (int i = 0; i < file.size(); i++) { 
 		for (int j = 0; j < file[i].size(); j++) {
 			cchar = file[i][j];
-			if ((cchar == 0x09) || (cchar == '\n')) { //if the string is a character 
-								  //that has to be skipped
+			if ((cchar == 0x09)) {  //if the string is a character 
+				                //that has to be skipped
 				cchar = 0x07;
 			}
-			checkForSpace:
-			if (cchar == ' ') {	
-				goto checkForSpace;
+			if (cchar == ' ') {
+				while (file[i][j -1] == ' ' && j < file[i].size()) {
+					j++;
+				}
+				cchar = 0x07;
 			}
-			outputString += std::to_string (cchar);
-		} 
-	}
+			outputString += cchar;
+		}
+		outputString += 0x07; //for new lines. 
+	}b
 	std::cout << outputString << std::endl;
 	return outputString; 
+}
+
+bool isDelim (char input) {
+	switch (input) {
+
+	}
 }
