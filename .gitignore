@@ -6,3 +6,5 @@ program1
 program1\.cpp
 
 out.txt
+
+*.sw?
