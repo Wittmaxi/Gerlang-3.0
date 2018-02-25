@@ -99,3 +99,27 @@ items getOperator (char op) {
 	}
 	return outputString;
 }
+
+std::string sanitizeFile (std::vector<std::string> file) { //takes a file, removes all spaces; nlines
+							   //and tabulators; replacing them with a unicode 
+							   //character that isnt used in text (0x07)
+							   //thus creating a sole string
+	char cchar;	
+	std::string outputString;
+	for (int i = 0; i < file.size(); i++) { 
+		for (int j = 0; j < file[i].size(); j++) {
+			cchar = file[i][j];
+			if ((cchar == 0x09) || (cchar == '\n')) { //if the string is a character 
+								  //that has to be skipped
+				cchar = 0x07;
+			}
+			checkForSpace:
+			if (cchar == ' ') {	
+				goto checkForSpace;
+			}
+			outputString += std::to_string (cchar);
+		} 
+	}
+	std::cout << outputString << std::endl;
+	return outputString; 
+}
