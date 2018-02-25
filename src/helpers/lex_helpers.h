@@ -119,16 +119,28 @@ std::string sanitizeFile (std::vector<std::string> file) { //takes a file, remov
 				}
 				cchar = 0x07;
 			}
+			if (cchar == '#' || cchar == '~') {
+				break;
+			}
 			outputString += cchar;
 		}
 		outputString += 0x07; //for new lines. 
-	}b
+	}
 	std::cout << outputString << std::endl;
 	return outputString; 
 }
 
-bool isDelim (char input) {
-	switch (input) {
 
-	}
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
