@@ -1,12 +1,27 @@
 enum class items{
-	BEGIN_OF_FILE,
-	BEGIN_FUNC, //the entire document - more like a "wrapper"
-	END,
-	FUNCTION_DECL,
-	FUNC_TYPE_1,
-	FUNCT_TYPE_2,
-	RVAL,
-	OPERATOR
+	DELIM, //delimitors like {, (, [
+	//main function
+	MAIN_FUNC, //anfang
+	//function declarations
+	FUNCTION_1, //funktion
+	FUNCTION_2, //ergibt
+	//return statements
+	RETURN_1,   //gebe
+	RETURN_2,   //zurück
+	//conditional statements
+	COND, //wenn
+	//loops
+	LOOP, //solange
+	//any identifier
+	IDENT,
+	//rvalues
+	BOOL_RVAL,
+	CHAR_RVAL,
+	INT_RVAL,
+	FLOAT_RVAL,
+	//variable declarations
+	VAR_DECL,
+	VAR_POINTER
 };
 
 std::vector <std::string> types { //vector containing the item types. Will be used later when  

@@ -78,6 +78,7 @@ bool isOperator (char op) {
 	}
 }
 
+/*
 items getOperator (char op) {
 	switch (op) {
 		case '+':
@@ -99,6 +100,7 @@ items getOperator (char op) {
 	}
 	return outputString;
 }
+*/
 
 std::string sanitizeFile (std::vector<std::string> file) { //takes a file, removes all spaces; nlines
 							   //and tabulators; replacing them with a unicode 
@@ -129,8 +131,6 @@ std::string sanitizeFile (std::vector<std::string> file) { //takes a file, remov
 	std::cout << outputString << std::endl;
 	return outputString; 
 }
-
-
 
 
 
