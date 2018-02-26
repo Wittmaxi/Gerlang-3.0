@@ -116,7 +116,7 @@ std::string sanitizeFile (std::vector<std::string> file) { //takes a file, remov
 				cchar = 0x07;
 			}
 			if (cchar == ' ') {
-				while (file[i][j -1] == ' ' && j < file[i].size()) {
+				while (file[i][j +1] == ' ' && j < file[i].size()) {
 					j++;
 				}
 				cchar = 0x07;
@@ -132,6 +132,81 @@ std::string sanitizeFile (std::vector<std::string> file) { //takes a file, remov
 	return outputString; 
 }
 
+bool isBool (std::string val) {
+	if ((val == "wahr") || (val == "falsch")) {
+		return true;
+	}
+	return false;
+}
+
+bool isInt (std::string val) {
+	for (int i = 0; i < val.size(); i++) {
+		if ((val[i] > '9') || (val[i] < '0')) { //check if character value doesnt 
+							  //correspond with normal character values
+							  //for integers/numbers
+			return false;	
+		}
+	}
+	return (val.size() > 0) ? true : false;
+}
+
+bool isFloat (std::string val) {
+	bool hasPoint = false;
+	for (int i = 0; i < val.size(); i++) {
+		if (val[i] == '.') {
+			if (hasPoint == true) {
+				return false;
+			} else {
+				hasPoint = true;
+			}
+		} else if ((val[i] > '9') || (val[i] < '0')) { //check if character value doesnt 
+							  //correspond with normal character values
+							  //for integers/numbers
+			return false;	
+		}
+	}
+	return hasPoint;
+}
+
+std::ostream& operator<< (std::ostream& os, std::tuple<items, std::string> toPrint) {
+	items token = std::get <0> (toPrint);
+	std::string typeN;
+	if (token == items::DELIM) {
+		typeN = "DELIMITOR";
+	} else if (token == items::MAIN_FUNC) {
+		typeN = "MAIN_FUNC";
+	} else if (token == items::FUNCTION_1) {
+		typeN = "FUNCTION_1";
+	} else if (token == items::FUNCTION_2) {
+		typeN = "FUNCTION_2";
+	} else if (token == items::RETURN_1) {
+		typeN = "RETURN_1";
+	} else if (token == items::RETURN_2) {
+		typeN = "RETURN_2";
+	} else if (token == items::COND) {
+		typeN = "COND";
+	} else if (token == items::LOOP) {
+		typeN = "LOOP";
+	} else if (token == items::IDENT) {
+		typeN = "IDENT";
+	} else if (token == items::BOOL_RVAL) {
+		typeN = "BOOL_RVAL";
+	} else if (token == items::CHAR_RVAL) {
+		typeN = "CHAR_RVAL";
+	} else if (token == items::INT_RVAL) {
+		typeN = "INT_RVAL";
+	} else if (token == items::FLOAT_RVAL) {
+		typeN = "FLOAT_RVAL";
+	} else if (token == items::VAR_DECL) {
+		typeN = "VAR_DECL";
+	} else if (token == items::VAR_POINTER) {
+		typeN = "VAR_POINTER";
+	} else if (token == items::SCOPE_END) {
+		typeN = "SCOPE_END";
+	}
+	os << "token: " << typeN << " - additional info: " << std::get <1> (toPrint); 
+	return os;
+}
 
 
 

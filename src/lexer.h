@@ -67,20 +67,33 @@ std::string readTilNextExpr () {
 	std::cout << std::endl;
 	if (isDelim (file[position])) {
 		outputStr += file [position];	
-	}	
-	position++;
+	}
+	position ++;	
 	return outputStr;
 }
 
 bool handleRvals (std::string val) {
 	//check if it is a rval and if not so, returns false
+	if (isString(val)) {
+		addToOutput (items::CHAR_RVAL, getStr (val));
+	} else if (isBool (val)) {
+		addToOutput (items::BOOL_RVAL, val);
+	} else if (isInt (val)) {
+		addToOutput (items::INT_RVAL, val);
+	} else if (isFloat (val)) {
+		addToOutput (items::FLOAT_RVAL, val);
+	} else {
+		return false;
+	}
+	return true;
 }
 
 bool handleKeyW (std::string expression) {
 	//straightforward
-	std::cout << "gonna handle expressions" << std::endl;
 	if (expression == "anfang") {
 		addToOutput (items::MAIN_FUNC);	
+	} else if (expression == "ende") {
+		addToOutput (items::SCOPE_END);
 	} else if (expression == "funktion") {
 		addToOutput (items::FUNCTION_1);
 	} else if (expression == "ergibt") {
@@ -99,14 +112,17 @@ bool handleKeyW (std::string expression) {
 		addToOutput (items::VAR_POINTER);
 	} else if (handleRvals (expression)) {
 		//already appended
-	} else {} //it must be an identifier, so append it as one
+	} else {
+		addToOutput (items::IDENT, expression);
+	} //it must be an identifier, so append it as one
 	return true;	
 } 
 
 void evalExpression (std::string expression) {
-	if (isDelim (expression[0]) && expression.size() == 1) {
+	std::cout << "Current expression: " << expression << std::endl;
+	if (isDelim (expression[0])) {
 		addToOutput(items::DELIM, expression);
-	} else if (expression[0] == 0x07 && expression.size() == 1) {
+	} else if (expression == "") {
 		//do nothing
 	} else if (handleKeyW(expression)) {
 		//keywords are already handled
@@ -118,6 +134,9 @@ void evalExpression (std::string expression) {
 void find () {
 	while (position < file.size()) {
 		evalExpression (readTilNextExpr ());
+	}
+	for (auto i : output) {
+		std::cout << i << std::endl;
 	}	
 }
 

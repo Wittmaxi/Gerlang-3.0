@@ -2,6 +2,7 @@ enum class items{
 	DELIM, //delimitors like {, (, [
 	//main function
 	MAIN_FUNC, //anfang
+	SCOPE_END, //ende
 	//function declarations
 	FUNCTION_1, //funktion
 	FUNCTION_2, //ergibt
