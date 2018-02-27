@@ -1,0 +1,139 @@
+g++ src/*.cpp -o dsc
+#add some testing
+./dsc ./test/main.ds -a program1.cpp
+./test/main.ds
+-a
+fliesskommavariablehallo=0.0002ganzzahlvariablehallo=12funktionhallo()ergibtcharakter[]charactervariablerückgabe[]="hallo"geberückgabezurückendeanfanghallo()ende
+
+Current expression: 
+
+Current expression: 
+
+Current expression: fliesskomma
+
+Current expression: variable
+
+Current expression: hallo
+
+Current expression: =
+
+Current expression: 
+
+Current expression: 0.0002
+
+Current expression: ganzzahl
+
+Current expression: variable
+
+Current expression: hallo
+
+Current expression: =
+
+Current expression: 
+
+Current expression: 12
+
+Current expression: 
+
+Current expression: funktion
+
+Current expression: hallo
+
+Current expression: (
+
+Current expression: )
+
+Current expression: 
+
+Current expression: ergibt
+
+Current expression: charakter[
+
+Current expression: ]
+
+Current expression: 
+
+Current expression: 
+
+Current expression: character
+
+Current expression: variable
+
+Current expression: rückgabe[
+
+Current expression: ]
+
+Current expression: 
+
+Current expression: =
+
+Current expression: 
+
+Current expression: "hallo"
+
+Current expression: 
+
+Current expression: gebe
+
+Current expression: rückgabe
+
+Current expression: zurück
+
+Current expression: ende
+
+Current expression: 
+
+Current expression: 
+
+Current expression: anfang
+
+Current expression: 
+
+Current expression: hallo
+
+Current expression: (
+
+Current expression: )
+
+Current expression: 
+
+Current expression: ende
+
+Current expression: 
+
+Current expression: 
+token: IDENT - additional info: fliesskomma
+token: VAR_DECL - additional info: 
+token: IDENT - additional info: hallo
+token: DELIMITOR - additional info: =
+token: FLOAT_RVAL - additional info: 0.0002
+token: IDENT - additional info: ganzzahl
+token: VAR_DECL - additional info: 
+token: IDENT - additional info: hallo
+token: DELIMITOR - additional info: =
+token: INT_RVAL - additional info: 12
+token: FUNCTION_1 - additional info: 
+token: IDENT - additional info: hallo
+token: DELIMITOR - additional info: (
+token: DELIMITOR - additional info: )
+token: FUNCTION_2 - additional info: 
+token: IDENT - additional info: charakter[
+token: DELIMITOR - additional info: ]
+token: IDENT - additional info: character
+token: VAR_DECL - additional info: 
+token: IDENT - additional info: rückgabe[
+token: DELIMITOR - additional info: ]
+token: DELIMITOR - additional info: =
+token: CHAR_RVAL - additional info: hallo
+token: RETURN_1 - additional info: 
+token: IDENT - additional info: rückgabe
+token: RETURN_2 - additional info: 
+token: SCOPE_END - additional info: 
+token: MAIN_FUNC - additional info: 
+token: IDENT - additional info: hallo
+token: DELIMITOR - additional info: (
+token: DELIMITOR - additional info: )
+token: SCOPE_END - additional info: 
+g++ program1.cpp -o program1
+./program1
+zwei

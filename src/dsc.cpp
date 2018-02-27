@@ -5,6 +5,7 @@
 #include <vector>
 #include <utility>
 #include <tuple>
+#include <exception>
 
 std::vector<std::pair<std::string, int>> list_variables;
 std::vector<std::pair<std::string, int>> list_functions;
@@ -21,6 +22,7 @@ std::vector<std::string> code_mainFunction;
 #include "precompiler.h"
 #include "lexer.h"
 #include "finalize.h"
+#include "parser.h"
 
 int main (int argc, char** args) {
 	checkArgs (argc, args);

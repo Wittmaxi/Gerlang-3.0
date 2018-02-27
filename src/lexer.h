@@ -1,9 +1,9 @@
-std::vector <std::tuple <items, std::string> > output;
+std::vector <std::tuple <items, std::string> > lexerOutput;
 std::string file;
 int position;
 
 void addToOutput (items item, std::string code = "") {
-	output.push_back (make_pair (item, code));
+	lexerOutput.push_back (make_pair (item, code));
 }
 
 bool isDelim (char input) {
@@ -135,7 +135,7 @@ void find () {
 	while (position < file.size()) {
 		evalExpression (readTilNextExpr ());
 	}
-	for (auto i : output) {
+	for (auto i : lexerOutput) {
 		std::cout << i << std::endl;
 	}	
 }
