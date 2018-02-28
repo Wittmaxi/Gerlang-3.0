@@ -34,6 +34,10 @@ void handleDefine (std::vector<std::string>& input) {
 		std::pair<std::string, std::string> assign = findAssignements (definition);
 		std::string s1 = std::get <0> (assign);
 		std::string s2 = std::get <1> (assign);
+		if (!(s1.substr (0, 2) == "k_")) {
+			std::cout << "Präcompiler | Zeile " << counter << ". Als \"Konstant\" definierte Variablen müssen mit \"k_\" beginnen";
+			return;
+		};
 		if (isString (s2)) {
 			if (getStr(s2).size() > 1) {
 				generateVar (s1, s2, 2, true, true, s2.size());
