@@ -24,42 +24,6 @@ std::string getStr (std::string input) {
 	return input.substr (1, input.size() -2);
 }
 
-bool varExists (std::string varName) {
-	for (size_t i = 0; i < list_variables.size(); i++) {
-		if (std::get <0> (list_variables[i]) == varName) {
-			return true;
-		}
-	}
-	return false;
-}
-
-int varIndex (std::string varName) {
-	for (size_t i = 0; i < list_variables.size(); i++) {
-		if (std::get <0> (list_variables[i]) == varName) {
-			return i;
-		}
-	}
-	return -1;
-}
-
-bool typeExists (std::string typeName) {
-	for (size_t i = 0; i < types.size(); i++) {
-		if (types[i] == typeName) {
-			return true;
-		}
-	}
-	return false;
-}
-
-int typeIndex (std::string typeName) {
-	for (size_t i = 0; i < types.size(); i++) {
-		if (types[i] == typeName) {
-			return i;
-		}
-	}
-	return -1;
-}
-
 bool isOperator (char op) {
 	switch (op) {
 		case '+':
@@ -77,30 +41,6 @@ bool isOperator (char op) {
 			}
 	}
 }
-
-/*
-items getOperator (char op) {
-	switch (op) {
-		case '+':
-			return items::OPERATOR_PLUS;
-			break;
-		case '-':
-		case '/':
-		case '*':
-		case '%':
-			break;
-	}
-}
-
-	std::string removeComments (std::string input) {
-	std::string outputString;
-	for (int i = 0; i < input.size(); i++) {
-		if (input[i] == '#') {return outputString;}
-		outputString += input[i];
-	}
-	return outputString;
-}
-*/
 
 std::string sanitizeFile (std::vector<std::string> file) { //takes a file, removes all spaces; nlines
 							   //and tabulators; replacing them with a unicode 
@@ -208,7 +148,44 @@ std::ostream& operator<< (std::ostream& os, std::tuple<items, std::string> toPri
 	return os;
 }
 
-
+std::string tts (items toPrint) { //token to string
+	items token = toPrint;
+	std::string typeN;
+	if (token == items::DELIM) {
+		typeN = "DELIMITOR";
+	} else if (token == items::MAIN_FUNC) {
+		typeN = "MAIN_FUNC";
+	} else if (token == items::FUNCTION_1) {
+		typeN = "FUNCTION_1";
+	} else if (token == items::FUNCTION_2) {
+		typeN = "FUNCTION_2";
+	} else if (token == items::RETURN_1) {
+		typeN = "RETURN_1";
+	} else if (token == items::RETURN_2) {
+		typeN = "RETURN_2";
+	} else if (token == items::COND) {
+		typeN = "COND";
+	} else if (token == items::LOOP) {
+		typeN = "LOOP";
+	} else if (token == items::IDENT) {
+		typeN = "IDENT";
+	} else if (token == items::BOOL_RVAL) {
+		typeN = "BOOL_RVAL";
+	} else if (token == items::CHAR_RVAL) {
+		typeN = "CHAR_RVAL";
+	} else if (token == items::INT_RVAL) {
+		typeN = "INT_RVAL";
+	} else if (token == items::FLOAT_RVAL) {
+		typeN = "FLOAT_RVAL";
+	} else if (token == items::VAR_DECL) {
+		typeN = "VAR_DECL";
+	} else if (token == items::VAR_POINTER) {
+		typeN = "VAR_POINTER";
+	} else if (token == items::SCOPE_END) {
+		typeN = "SCOPE_END";
+	}
+	return typeN;
+}
 
 
 
