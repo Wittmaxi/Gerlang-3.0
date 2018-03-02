@@ -6,7 +6,7 @@ class scope {
 		}
 	}
 	void addVar (std::tuple <std::string, std::string> var) {
-		variables.push_back (i);
+		variables.push_back (var);
 	}
 	bool varExists (std::string name) { //does a specific variable already exist?
 		for (auto i : variables) {
@@ -15,6 +15,16 @@ class scope {
 			}
 		} 
 		return false;
+	}
+
+	std::string getVarType (std::string name) {
+		for (auto i : variables) {
+			if (std::get <0> (i) == name) {
+				return std::get<1> (i);
+			}
+		} 
+		return "";
+
 	}
 	
 	std::vector<std::tuple <std::string, std::string>> variables;

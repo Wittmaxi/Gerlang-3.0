@@ -18,6 +18,7 @@ std::string getTInfo () { //get the current information to the tokens
 
 void wpe(std::string error) { //write a parser error to stdout
 	std::cout << "Parser | Fehler :" << error << std::endl;
+	hasError = true;
 }
 
 bool incPos () {
@@ -28,37 +29,57 @@ bool incPos () {
 	return true;
 }
 
-void variableDefinition () {
+bool variableDefinition () {
 	
 }
 
-void functionDefinition () {
+bool functionDefinition () {
 	std::string functionName;
 	if (!(getToken() == items::FUNCTION_1)) {
-		return; //it's not a function definition 
+		return false; //it's not a function definition 
 	}
-	if (!(incPos)) {
+	if (!(incPos())) {
 		wpe ("\"Identifizierer\" erwartet, stattdessen \"Dateiende\" gefunden.");
-		hasError;	
 	} 	
 	if (getToken() == items::IDENT) {
 		functionName = getTInfo ();	
 	} else {
-		wpe ("\"Identifizierer\" erwartet, stattdessen " + tts (getToken()) + " bekommen");
+		wpe ("\"Identifizierer\" erwartet, stattdessen " + tts (getToken()) + " bekommen.");
 	}
-	
+	if (!(incPos())) {
+		wpe ("\"(\" erwartet, stattdessen \"Dateiende\" gefunden");
+	}	
+	if (!(getToken () == items::DELIM && getTInfo () == "(")) {
+		wpe ("\"(\" erwartet, stattdessen " + tts (getToken()) + " bekommen.");
+	}
+	if (!incPos ()) {
+		wpe ("\"Variablendeklaration\" oder \")\" erwartet, stattdessen " + tts (getToken()) +
+" bekommen.");
+	}
+	while (getToken () != items::IDENT && getTInfo () != ")") {
+		//variable definitions in functions
+	}
+	return hasError;
 }
 
 void beginOfFile () {
 	while (positionInLexerToken < lexerTokens.size()) {
-		functionDefinition (); //infinite amount of function definitions are 
-				       //allowed
-		variableDefinition (); //infinite amounts of variable definitionas are allowed
+		//if the current token is either a function definition or a variable definition
+		//as is allowed
+		if (functionDefinition () || //infinite amount of function definitions are 
+				       	     //allowed
+		    variableDefinition ())   //infinite amounts of variable definitionas are allowed
+		{
+			//valid command
+		} else {
+			wpe ("\"Funktionsdefinition\" oder \"variablendeklaration\" erwartet, stattdessen " + tts (getToken()) + " bekommen.");
+		}
 	}	
 }
 
 void parse (std::vector<std::tuple < items, std::string>> input) {
 	//parses and generates the C++ code of the thing.	
 	lexerTokens = input;
+	scopes.push_back (scope());
 	beginOfFile ();
 }

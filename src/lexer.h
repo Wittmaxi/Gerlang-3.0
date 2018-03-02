@@ -18,6 +18,7 @@ bool isDelim (char input) {
 		case '+':
 		case '-':
 		case '*':
+		case ',':
 		case '/':
 			{
 				return true;
@@ -31,27 +32,11 @@ bool isDelim (char input) {
 }
 
 bool isItem (char input) {
-	
-	switch (input) {
-		case '(':
-		case '{':
-		case '[':
-		case ')':
-		case ']':
-		case '}':
-		case '=':
-		case '+':
-		case '-':
-		case '*':
-		case '/':
-		case 0x07:
-		{
-			return true;
-			break;
-		}
-		default: 
-			return false;
-			break;
+{
+	if ((isDelim (input)) || (input == 0x07)) {
+		return true;
+	} else 
+		return false;
 	}
 	return false;
 }
