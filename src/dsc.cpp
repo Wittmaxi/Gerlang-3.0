@@ -19,4 +19,5 @@ int main (int argc, char** args) {
 	std::vector<std::string> file = cacheFile (target);
 	prec (file);
 	lex (file);
+	parse(lexerOutput);
 }

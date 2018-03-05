@@ -1,4 +1,5 @@
 class scope {
+public: //since i'm the only user of scope, it might as well be public
 	void addVars (std::vector<std::tuple<std::string, std::string>> vars) { 
 		//takes in a vector of <variablename, typedenominator>
 		for (auto i : vars) {

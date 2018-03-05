@@ -6,7 +6,12 @@ std::vector<std::string> currentCode; //thecode for the current Scope
 bool hasError;	//dont proceed, if the code didnt pass through the CFG
 bool hasMainFunction;
 std::vector<scope> scopes; //stack of all the scopes. New scopes get the variables of the ones above
+scope currentScope; //the scope we are currently working in
 std::vector<std::string> outCode;//the code that the parser outputs
+
+bool incPos (bool endAllowed) {
+
+}
 
 items getToken () { //get the current token
 	return std::get <0> (lexerTokens[positionInLexerToken]);
@@ -34,10 +39,16 @@ bool variableDefinition () {
 }
 
 bool functionDefinition () {
-	std::string functionName;
 	if (!(getToken() == items::FUNCTION_1)) {
-		return false; //it's not a function definition 
+		return false; //it's not a function definition
 	}
+	
+	scope generatedScope{};
+	generatedScope.addVars (currentScope.variables);
+	std::string functionName; //the name of da function
+	std::vector<std::tuple < std::string, std::string >> variables; //the input variables. <name, type>
+	std::string funcReturnType;
+
 	if (!(incPos())) {
 		wpe ("\"Identifizierer\" erwartet, stattdessen \"Dateiende\" gefunden.");
 	} 	
@@ -56,9 +67,46 @@ bool functionDefinition () {
 		wpe ("\"Variablendeklaration\" oder \")\" erwartet, stattdessen " + tts (getToken()) +
 " bekommen.");
 	}
-	while (getToken () != items::IDENT && getTInfo () != ")") {
+	while ((getToken () != items::IDENT && getTInfo () != ")") && positionInLexerToken) {
 		//variable definitions in functions
+		if (!((getToken () == items::IDENT))) {
+			std::string type = getTInfo();
+			std::string name;
+			if (!incPos ()) {
+				wpe ("\"variable\" erwartet, stattessen \"Dateiende\" gefunden.");
+			}						
+			if (!(getToken () != items::VAR_DECL)) {
+				wpe ("\"variable\" erwartet, stattdessen " + tts(getToken) + " bekommen.");
+			}
+			if (!incPos ()) {
+				wpe ("\"identifizierer\" erwartet, stattdessen \"Dateiende\" gefunden.");
+			}		
+			if (!(getToken() != items::IDENT)) {
+				wpe ("\"Identifizierer\" erwartet, stattdessen " + tts(getToken) + " bekommen.");
+			}
+			name = getTInfo ();
+		} 
+		if (getToken() == ",") {
+
+		} else if (getToken () == ")") {
+
+		} else {
+			wpe ("\")"\" oder \",\" erwartet, statdessen " + tts (getToken()) + " bekommen.");			
+		}
+		variables.push_back (std::make_pair (name, type));
 	}
+	if (!(getToken () == items::FUNCTION_2)) {
+		wpe ("\"ergibt\" erwartet, statdessen " + tts (getToken()) + " bekommen");
+	}	
+	if (!(incPos)) {
+		wpe ("\"Identifizierer\" erwartet, stattdessen \"Dateiende\" bekommen.");
+	}
+	if (!(getToken () == items::IDENT) {
+		wpe ("\"Identifizierer\" erwartet, stattdessen " + tts (getToken) + " bekommen");	
+	}
+	funcReturnType = getTInfo();
+	generatedScope.addVars (variables);
+	
 	return hasError;
 }
 
@@ -80,6 +128,7 @@ void beginOfFile () {
 void parse (std::vector<std::tuple < items, std::string>> input) {
 	//parses and generates the C++ code of the thing.	
 	lexerTokens = input;
-	scopes.push_back (scope());
+	currentScope = scope();
+	scopes.push_back (currentScope);
 	beginOfFile ();
 }
