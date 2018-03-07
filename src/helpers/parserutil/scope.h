@@ -25,9 +25,10 @@ public: //since i'm the only user of scope, it might as well be public
 			}
 		} 
 		return "";
-
 	}
-	
+	void addCode (std::string inputCode) {
+		code.push_back (inputCode);
+	}	
 	std::vector<std::tuple <std::string, std::string>> variables;
 	bool anynome;
 	std::vector <std::string> code;

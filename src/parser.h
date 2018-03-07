@@ -91,7 +91,7 @@ bool functionDefinition () {
 		} else if (getToken () == ")") {
 
 		} else {
-			wpe ("\")"\" oder \",\" erwartet, statdessen " + tts (getToken()) + " bekommen.");			
+			wpe ("\")\" oder \",\" erwartet, statdessen " + tts (getToken()) + " bekommen.");			
 		}
 		variables.push_back (std::make_pair (name, type));
 	}
@@ -106,7 +106,7 @@ bool functionDefinition () {
 	}
 	funcReturnType = getTInfo();
 	generatedScope.addVars (variables);
-	
+	generatedScope.addCode ();	
 	return hasError;
 }
 

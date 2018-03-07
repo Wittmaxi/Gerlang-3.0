@@ -41,3 +41,16 @@ bool isInVec (T input, std::vector<T> inputVec) {
 	}
 	return false;
 }
+
+bool isStandardType (std::string name) {
+	if (
+		name == "boolesche"   ||
+		name == "ganzzahle"   ||
+		name == "character"   ||
+		name == "fliesskomma" ||
+	) {
+		return true;
+	}
+	return false;
+}
+
