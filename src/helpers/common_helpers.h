@@ -45,12 +45,32 @@ bool isInVec (T input, std::vector<T> inputVec) {
 bool isStandardType (std::string name) {
 	if (
 		name == "boolesche"   ||
-		name == "ganzzahle"   ||
+		name == "ganzzahl"    ||
 		name == "character"   ||
-		name == "fliesskomma" ||
+		name == "fliesskomma" 
 	) {
 		return true;
 	}
 	return false;
 }
+
+std::string returnTypeName (std::string name) {
+	if (isStandardType (name)) {
+		if (name == "boolesche") {return std::string("bool");}
+		if (name == "ganzzahl") {return std::string("int");}
+		if (name == "character") {return std::string ("char");}
+		if (name == "fliesskomma") {return std::string ("float");}
+	}
+	return name;
+}
+
+
+
+
+
+
+
+
+
+
 

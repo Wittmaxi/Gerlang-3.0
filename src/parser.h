@@ -69,26 +69,27 @@ bool functionDefinition () {
 	}
 	while ((getToken () != items::IDENT && getTInfo () != ")") && positionInLexerToken) {
 		//variable definitions in functions
+		std::string type = getTInfo();
+		std::string name;
+	
 		if (!((getToken () == items::IDENT))) {
-			std::string type = getTInfo();
-			std::string name;
 			if (!incPos ()) {
 				wpe ("\"variable\" erwartet, stattessen \"Dateiende\" gefunden.");
 			}						
 			if (!(getToken () != items::VAR_DECL)) {
-				wpe ("\"variable\" erwartet, stattdessen " + tts(getToken) + " bekommen.");
+				wpe ("\"variable\" erwartet, stattdessen " + tts(getToken()) + " bekommen.");
 			}
 			if (!incPos ()) {
 				wpe ("\"identifizierer\" erwartet, stattdessen \"Dateiende\" gefunden.");
 			}		
 			if (!(getToken() != items::IDENT)) {
-				wpe ("\"Identifizierer\" erwartet, stattdessen " + tts(getToken) + " bekommen.");
+				wpe ("\"Identifizierer\" erwartet, stattdessen " + tts(getToken()) + " bekommen.");
 			}
 			name = getTInfo ();
 		} 
-		if (getToken() == ",") {
+		if (getTInfo () == ",") {
 
-		} else if (getToken () == ")") {
+		} else if (getTInfo () == ")") {
 
 		} else {
 			wpe ("\")\" oder \",\" erwartet, statdessen " + tts (getToken()) + " bekommen.");			
@@ -98,20 +99,20 @@ bool functionDefinition () {
 	if (!(getToken () == items::FUNCTION_2)) {
 		wpe ("\"ergibt\" erwartet, statdessen " + tts (getToken()) + " bekommen");
 	}	
-	if (!(incPos)) {
+	if (!(incPos())) {
 		wpe ("\"Identifizierer\" erwartet, stattdessen \"Dateiende\" bekommen.");
 	}
-	if (!(getToken () == items::IDENT) {
-		wpe ("\"Identifizierer\" erwartet, stattdessen " + tts (getToken) + " bekommen");	
+	if (!(getToken () == items::IDENT)) {
+		wpe ("\"Identifizierer\" erwartet, stattdessen " + tts (getToken()) + " bekommen");	
 	}
 	funcReturnType = getTInfo();
 	generatedScope.addVars (variables);
-	generatedScope.addCode ();	
+	//generatedScope.addCode ();	
 	return hasError;
 }
 
 void beginOfFile () {
-	while (positionInLexerToken < lexerTokens.size()) {
+	while ((positionInLexerToken < lexerTokens.size()) && !(hasError)) {
 		//if the current token is either a function definition or a variable definition
 		//as is allowed
 		if (functionDefinition () || //infinite amount of function definitions are 
@@ -121,6 +122,7 @@ void beginOfFile () {
 			//valid command
 		} else {
 			wpe ("\"Funktionsdefinition\" oder \"variablendeklaration\" erwartet, stattdessen " + tts (getToken()) + " bekommen.");
+			hasError = true;
 		}
 	}	
 }
