@@ -38,22 +38,22 @@ bool isItem (char input) {
 	} else 
 		return false;
 	}
-	return false;
+	return true;
 }
 
 std::string readTilNextExpr () {
 	std::string outputStr;	
+	if (isDelim (file[position])) {
+		outputStr += file [position];	
+	}
 	while (!(isItem(file[position]))) {
 		outputStr += file [position];
-		if (!(position >= file.size())) {
+		if (!(position++ >= file.size())) {
 			 position++;
 		}
 	}
 	std::cout << std::endl;
-	if (isDelim (file[position])) {
-		outputStr += file [position];	
-	}
-	position ++;	
+	position++;
 	return outputStr;
 }
 

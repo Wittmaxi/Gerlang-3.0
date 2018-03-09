@@ -35,7 +35,8 @@ bool incPos () {
 }
 
 bool variableDefinition () {
-	
+	incPos();
+	return true;
 }
 
 bool functionDefinition () {
@@ -96,6 +97,9 @@ bool functionDefinition () {
 		}
 		variables.push_back (std::make_pair (name, type));
 	}
+	if (!(incPos())) {
+		wpe ("\"ergibt\" erwartet, stattdessen \"Dateiende\" bekommen.");
+	}
 	if (!(getToken () == items::FUNCTION_2)) {
 		wpe ("\"ergibt\" erwartet, statdessen " + tts (getToken()) + " bekommen");
 	}	
@@ -107,7 +111,22 @@ bool functionDefinition () {
 	}
 	funcReturnType = getTInfo();
 	generatedScope.addVars (variables);
-	//generatedScope.addCode ();	
+	std::string inputs = "(";
+	for (int i = 0; i < variables.size(); i++) {
+		if (i != 0) {inputs += ",";}
+		inputs += (returnTypeName (std::get <1> (variables[i])));
+		inputs += (returnTypeName (std::get <0> (variables[i])));	
+	}
+	inputs += ")";
+	generatedScope.addCode (
+		returnTypeName (funcReturnType) +
+		functionName + 
+	 	inputs + 
+		"{"//the scope of the function				
+	);
+	for (auto i : generatedScope.code) {
+		std::cout << i << std::endl;
+	}	
 	return hasError;
 }
 
