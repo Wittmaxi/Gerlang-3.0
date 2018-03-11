@@ -32,16 +32,6 @@ void printVect (std::vector<std::string> T) {
 	}
 }
 
-template<typename T>
-bool isInVec (T input, std::vector<T> inputVec) {
-	for (auto i: inputVec) {
-		if (i == input) {
-			return true;
-		}
-	}
-	return false;
-}
-
 bool isStandardType (std::string name) {
 	if (
 		name == "boolesche"   ||
@@ -64,13 +54,11 @@ std::string returnTypeName (std::string name) {
 	return name;
 }
 
-
-
-
-
-
-
-
-
-
-
+template <typename T> bool isInVec (T item, std::vector<T> toFindIn) {
+	for (T i : toFindIn) {
+		if (i == item) {
+			return true;
+		}
+	}
+	return false;
+} 
