@@ -42,18 +42,18 @@ bool isItem (char input) {
 }
 
 std::string readTilNextExpr () {
-	std::string outputStr;	
-	if (isDelim (file[position])) {
-		outputStr += file [position];	
-	}
-	while (!(isItem(file[position]))) {
-		outputStr += file [position];
-		if (!(position++ >= file.size())) {
-			 position++;
+	std::string outputStr;
+	if (isItem (file[position])) {
+		if (isDelim (file[position])) {
+			outputStr += file[position];
 		}
+		position++;
+		return outputStr;
+	}	
+	while (!isItem(file[position])) {
+		outputStr += file[position];
+		position++;	
 	}
-	std::cout << std::endl;
-	position++;
 	return outputStr;
 }
 
@@ -107,7 +107,7 @@ void evalExpression (std::string expression) {
 	std::cout << "Current expression: " << expression << std::endl;
 	if (isDelim (expression[0])) {
 		addToOutput(items::DELIM, expression);
-	} else if (expression == "") {
+	} else if (expression == "" || expression == " ") {
 		//do nothing
 	} else if (handleKeyW(expression)) {
 		//keywords are already handled

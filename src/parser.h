@@ -9,6 +9,8 @@ std::vector<scope> scopes; //stack of all the scopes. New scopes get the variabl
 scope currentScope; //the scope we are currently working in
 std::vector<std::string> outCode;//the code that the parser outputs
 
+
+
 bool incPos (bool endAllowed) {
 
 }
@@ -33,6 +35,9 @@ bool incPos () {
 	}	
 	return true;
 }
+
+#include "helpers/parserutil/parseHelpers.h" //include some utilities, that dont NESSECARILY have to be 
+					     //in here
 
 bool variableDefinition () {
 	incPos();
@@ -119,9 +124,9 @@ bool functionDefinition () {
 	}
 	inputs += ")";
 	generatedScope.addCode (
-		returnTypeName (funcReturnType) +
-		functionName + 
-	 	inputs + 
+		returnTypeName (funcReturnType) + " " +
+		functionName + " " +
+	 	inputs + " " +
 		"{"//the scope of the function				
 	);
 	for (auto i : generatedScope.code) {

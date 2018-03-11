@@ -62,12 +62,12 @@ ende
 
 ```funktion```
 
-```funktion``` defines a later usable function. It has a name, variable declarations for input a return type which are indicated like so: ```funktion [name] ([variables]) gibt [type] zurück```.
+```funktion``` defines a later usable function. It has a name, variable declarations for input a return type which are indicated like so: ```funktion [name] ([variables]) ergibt [type]```.
 It implies a scope.
 
 Example:
 ```
-funktion sinus (ganzzahl variable input, ganzzahl variable input2) gibt fliesskomma zurück
+funktion sinus (ganzzahl variable input, ganzzahl variable input2) ergibt fliesskomma
 	#code
 ende
 ```
@@ -153,26 +153,6 @@ VARIABLE TYPES
 ```charakter``` - possible rvalues: any 1bit integral value or single characters - equivalent to char in C++
 
 ```fliesskomma``` - possible rvalues: any 8bit (positive or negative) value - equivalent to "double" in C++ 
-
-Arrays: arrays can be implied with [] and the length. Leave empty for no special length. They can be instantly defined by a "{"
-example: 
-
-```
-fliesskomma variable array [4] = {1, 3, 4, 6}
-fliesskomma variable array [] 
-```
-
-Pointers:
-
-If you want to declare a variable, you add in ```zeiger``` after the type.
-
-Example:
-```
-charakter zeiger variable text = "HALLO"
-```
-
-The variable has as value its location in memory and can be assigned any rvalue.
-To get its real value, it has to be dereferenced with ```*```.
 
 ============================
 
