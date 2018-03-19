@@ -2,18 +2,15 @@
 
 std::vector<std::tuple < items, std::string >> lexerTokens;
 int positionInLexerToken;
-std::vector<std::string> currentCode; //thecode for the current Scope
 bool hasError;	//dont proceed, if the code didnt pass through the CFG
 bool hasMainFunction;
 std::vector<scope> scopes; //stack of all the scopes. New scopes get the variables of the ones above
 scope currentScope; //the scope we are currently working in
 std::vector<std::string> outCode;//the code that the parser outputs
+bool isInOutterScope;
+std::vector<std::string> totalCode;
 
-
-
-bool incPos (bool endAllowed) {
-
-}
+//////////UTILITIES
 
 items getToken () { //get the current token
 	return std::get <0> (lexerTokens[positionInLexerToken]);
@@ -36,8 +33,21 @@ bool incPos () {
 	return true;
 }
 
+void decreaseScope () {
+	if (scopes.size() == 1) {
+		//later : throw errors
+	} else {
+		totalCode.insert (totalCode.end(), currentScope.code.begin(), currentScope.code.end());	
+		scopes.resize (scopes.size()-1);
+		currentScope = *scopes.end();
+	}
+}
+
+///////////PARSE - HELPERS
+
 #include "helpers/parserutil/parseHelpers.h" //include some utilities, that dont NESSECARILY have to be 
 					     //in here
+////////////IMPLEMENTATION
 
 bool variableDefinition () {
 	incPos();
@@ -79,7 +89,7 @@ bool functionDefinition () {
 		std::cout << "varsllooooooppppp" << std::endl;	
 		variable currentVar;
 		currentVar = parseVariable();
-		if ((! currentVar.isInit) || (!(getTInfo() == ")"))) {
+		if ((! currentVar.isInit) && (!(getTInfo() == ")"))) {
 			wpe ("Variablendeklaration erwartet.");
 		} else { 	
 			variables.push_back (std::make_pair (currentVar.name, currentVar.type));
@@ -126,13 +136,23 @@ bool functionDefinition () {
 	return hasError;
 }
 
+bool outterScopeCalls() {
+	if (isInOutterScope) {
+
+	} else {
+		return false;
+	}
+}
+
 void beginOfFile () {
+	isInOutterScope = true;
 	while ((positionInLexerToken < lexerTokens.size()) && !(hasError)) {
 		//if the current token is either a function definition or a variable definition
 		//as is allowed
 		if (functionDefinition () || //infinite amount of function definitions are 
 				       	     //allowed
-		    variableDefinition ())   //infinite amounts of variable definitionas are allowed
+		    variableDefinition () || //infinite amounts of variable definitionas are allowed
+		    outterScopeCalls ())     //for scopes that are outside of the outter scope
 		{
 			//valid command
 		} else {
