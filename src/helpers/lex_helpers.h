@@ -139,8 +139,6 @@ std::ostream& operator<< (std::ostream& os, std::tuple<items, std::string> toPri
 		typeN = "FLOAT_RVAL";
 	} else if (token == items::VAR_DECL) {
 		typeN = "VAR_DECL";
-	} else if (token == items::VAR_POINTER) {
-		typeN = "VAR_POINTER";
 	} else if (token == items::SCOPE_END) {
 		typeN = "SCOPE_END";
 	}
@@ -179,8 +177,6 @@ std::string tts (items toPrint) { //token to string
 		typeN = "FLOAT_RVAL";
 	} else if (token == items::VAR_DECL) {
 		typeN = "VAR_DECL";
-	} else if (token == items::VAR_POINTER) {
-		typeN = "VAR_POINTER";
 	} else if (token == items::SCOPE_END) {
 		typeN = "SCOPE_END";
 	}

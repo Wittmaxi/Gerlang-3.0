@@ -29,7 +29,7 @@ public: //since i'm the only user of scope, it might as well be public
 	void addCode (std::string inputCode) {
 		code.push_back (inputCode);
 	}
-	std::vector<std::string> types; //important for later bruh	
+	std::vector<std::string> types; //important for later	
 	std::vector<std::tuple <std::string, std::string>> variables;
 	bool anynome;
 	std::vector <std::string> code;

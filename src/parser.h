@@ -24,7 +24,7 @@ std::string getTInfo () { //get the current information to the tokens
 }
 
 void wpe(std::string error) { //write a parser error to stdout
-	std::cout << "Parser | Fehler :" << error << std::endl;
+	std::cout << "Parser | Fehler: " << error << std::endl;
 	hasError = true;
 }
 
@@ -73,34 +73,25 @@ bool functionDefinition () {
 		wpe ("\"Variablendeklaration\" oder \")\" erwartet, stattdessen " + tts (getToken()) +
 " bekommen.");
 	}
-	while ((getToken () != items::IDENT && getTInfo () != ")") && positionInLexerToken) {
+	bool leaveLoop = true;
+	while (leaveLoop) {
 		//variable definitions in functions
-		std::string type = getTInfo();
-		std::string name;
-	
-		if (!((getToken () == items::IDENT))) {
-			if (!incPos ()) {
-				wpe ("\"variable\" erwartet, stattessen \"Dateiende\" gefunden.");
-			}						
-			if (!(getToken () != items::VAR_DECL)) {
-				wpe ("\"variable\" erwartet, stattdessen " + tts(getToken()) + " bekommen.");
-			}
-			if (!incPos ()) {
-				wpe ("\"identifizierer\" erwartet, stattdessen \"Dateiende\" gefunden.");
-			}		
-			if (!(getToken() != items::IDENT)) {
-				wpe ("\"Identifizierer\" erwartet, stattdessen " + tts(getToken()) + " bekommen.");
-			}
-			name = getTInfo ();
-		} 
+		std::cout << "varsllooooooppppp" << std::endl;	
+		variable currentVar;
+		currentVar = parseVariable();
+		if ((! currentVar.isInit) || (!(getTInfo() == ")"))) {
+			wpe ("Variablendeklaration erwartet.");
+		} else { 	
+			variables.push_back (std::make_pair (currentVar.name, currentVar.type));
+		}
 		if (getTInfo () == ",") {
 
 		} else if (getTInfo () == ")") {
-
+			leaveLoop = false;
 		} else {
-			wpe ("\")\" oder \",\" erwartet, statdessen " + tts (getToken()) + " bekommen.");			
+			wpe ("\")\" oder \",\" erwartet, statdessen " + tts (getToken()) + " bekommen.");		
+			leaveLoop = false;	
 		}
-		variables.push_back (std::make_pair (name, type));
 	}
 	if (!(incPos())) {
 		wpe ("\"ergibt\" erwartet, stattdessen \"Dateiende\" bekommen.");

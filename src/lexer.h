@@ -93,8 +93,6 @@ bool handleKeyW (std::string expression) {
 		addToOutput (items::LOOP);
 	} else if (expression == "variable") {
 		addToOutput (items::VAR_DECL);
-	} else if (expression == "zeiger") {
-		addToOutput (items::VAR_POINTER);
 	} else if (handleRvals (expression)) {
 		//already appended
 	} else {
