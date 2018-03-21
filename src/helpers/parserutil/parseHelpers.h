@@ -7,7 +7,7 @@ struct variable {
 variable parseVariable () { //look for variables
 	variable returnVar;
 	if (getToken () == items::IDENT) { //the type of the var
-		if (!(isInVec<std::string> (getTInfo(), currentScope.types) || isStandardType (getTInfo()))) { //the type of vars exists
+		if (!(isInVec<std::string> (getTInfo(), scopes.end()->types) || isStandardType (getTInfo()))) { //the type of vars exists
 			returnVar.type = returnTypeName(getTInfo());
 			incPos ();
 			if (!(getToken () == items::VAR_DECL)) {
@@ -17,7 +17,7 @@ variable parseVariable () { //look for variables
 			if (!(getToken () == items::IDENT)) { //the name
 				wpe ("\"Identifizierer\" erwartet, stattdessen " + tts (getToken()) + " bekommen.");
 			}
-			for (auto i : currentScope.variables) { // to be changed later
+			for (auto i : scopes.end()->variables) { // to be changed later
 				if (std::get <0> (i) == getTInfo ()) {
 					wpe ("Variablenname " + getTInfo() + " ist schon benutzt.");
 				}

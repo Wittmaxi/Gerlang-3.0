@@ -5,7 +5,6 @@ int positionInLexerToken;
 bool hasError;	//dont proceed, if the code didnt pass through the CFG
 bool hasMainFunction;
 std::vector<scope> scopes; //stack of all the scopes. New scopes get the variables of the ones above
-scope currentScope; //the scope we are currently working in
 std::vector<std::string> outCode;//the code that the parser outputs
 bool isInOutterScope;
 std::vector<std::string> totalCode;
@@ -37,9 +36,9 @@ void decreaseScope () {
 	if (scopes.size() == 1) {
 		//later : throw errors
 	} else {
-		totalCode.insert (totalCode.end(), currentScope.code.begin(), currentScope.code.end());	
+		totalCode.insert (totalCode.end(), scopes.end()->code.begin(), scopes.end()->code.end());	
 		scopes.resize (scopes.size()-1);
-		currentScope = *scopes.end();
+		isInOutterScope = (scopes.size () == 1) ? true : false;	
 	}
 }
 
@@ -59,8 +58,7 @@ bool functionDefinition () {
 		return false; //it's not a function definition
 	}
 	
-	scope generatedScope{};
-	generatedScope.addVars (currentScope.variables);
+	scope generatedScope (*scopes.end());
 	std::string functionName; //the name of da function
 	std::vector<std::tuple < std::string, std::string >> variables; //the input variables. <name, type>
 	std::string funcReturnType;
@@ -115,6 +113,7 @@ bool functionDefinition () {
 	if (!(getToken () == items::IDENT)) {
 		wpe ("\"Identifizierer\" erwartet, stattdessen " + tts (getToken()) + " bekommen");	
 	}
+	incPos();
 	funcReturnType = getTInfo();
 	generatedScope.addVars (variables);
 	std::string inputs = "(";
@@ -130,15 +129,27 @@ bool functionDefinition () {
 	 	inputs + " " +
 		"{"//the scope of the function				
 	);
-	for (auto i : generatedScope.code) {
-		std::cout << i << std::endl;
-	}	
+	scopes.push_back (generatedScope);
+	isInOutterScope = false;	
 	return hasError;
 }
 
-bool outterScopeCalls() {
-	if (isInOutterScope) {
+bool endOfScope () {
+	if (! (getToken () == items::SCOPE_END)) {
+		scopes.end()->code.push_back ("}");
+		decreaseScope();
+		incPos();	
+	}
+}
 
+bool innerScopeCalls() {
+	if (! isInOutterScope) {
+		if ( 
+			endOfScope()
+		) {
+			return true;
+		}
+		return false;
 	} else {
 		return false;
 	}
@@ -151,21 +162,25 @@ void beginOfFile () {
 		//as is allowed
 		if (functionDefinition () || //infinite amount of function definitions are 
 				       	     //allowed
-		    variableDefinition () || //infinite amounts of variable definitionas are allowed
-		    outterScopeCalls ())     //for scopes that are outside of the outter scope
+		    innerScopeCalls () ||
+		    variableDefinition () //infinite amounts of variable definitionas are allowed
+		)     
 		{
 			//valid command
 		} else {
 			wpe ("\"Funktionsdefinition\" oder \"variablendeklaration\" erwartet, stattdessen " + tts (getToken()) + " bekommen.");
 			hasError = true;
 		}
+	}
+	for (auto i : scopes.end()->code) {
+		std::cout << i << std::endl;
 	}	
 }
 
 void parse (std::vector<std::tuple < items, std::string>> input) {
 	//parses and generates the C++ code of the thing.	
 	lexerTokens = input;
-	currentScope = scope();
-	scopes.push_back (currentScope);
+	scope outterScope;
+	scopes.push_back (outterScope);
 	beginOfFile ();
 }

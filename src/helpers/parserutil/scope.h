@@ -1,5 +1,12 @@
 class scope {
 public: //since i'm the only user of scope, it might as well be public
+	scope () {
+
+	}
+	scope (const scope& other) { //copy all the variables/functions etc
+		types = other.types;
+		variables = other.variables;
+	}
 	void addVars (std::vector<std::tuple<std::string, std::string>> vars) { 
 		//takes in a vector of <variablename, typedenominator>
 		for (auto i : vars) {

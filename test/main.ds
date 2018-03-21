@@ -1,11 +1,7 @@
-fliesskomma variable hallo1 = 0.0002
-ganzzahl variable hallo2 = 12
-
 funktion hallofunc() ergibt charakter
-	character variable rückgabe = "hallo"
-	gebe rückgabe zurück
+ 
 ende	
 
 anfang
-  hallo ()
-ende 
+
+ende
