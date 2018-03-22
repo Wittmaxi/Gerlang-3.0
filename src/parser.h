@@ -25,18 +25,18 @@ void wpe(std::string error) { //write a parser error to stdout
 }
 
 bool incPos () {
-	positionInLexerToken ++;
-	if (positionInLexerToken >= lexerTokens.size()) {
+	if (positionInLexerToken > lexerTokens.size()) {
 		return false;
+		hasError = true;
 	}	
+	positionInLexerToken ++;
 	return true;
 }
 
 void decreaseScope () {
 	if (scopes.size() == 1) {
 		//later : throw errors
-	} else {
-		totalCode.insert (totalCode.end(), scopes.end()->code.begin(), scopes.end()->code.end());	
+	} else {	
 		scopes.resize (scopes.size()-1);
 		isInOutterScope = (scopes.size () == 1) ? true : false;	
 	}
@@ -49,7 +49,18 @@ void decreaseScope () {
 ////////////IMPLEMENTATION
 
 bool variableDefinition () {
-	incPos();
+	variable currVar = parseVariable();
+	if (currVar.isInit == true) { //ITS A VARIABLE!
+		if (getToken() == items::DELIM) {
+			if (getTInfo () != "=") {
+				
+			}
+		}
+		totalCode.push_back (";"); //semicolon, being there
+					   //No matter if there is an
+					   //operation
+	}
+	incPos();	
 	return true;
 }
 
@@ -57,8 +68,8 @@ bool functionDefinition () {
 	if (!(getToken() == items::FUNCTION_1)) {
 		return false; //it's not a function definition
 	}
-	
-	scope generatedScope (*scopes.end());
+	std::cout << "function definitions" << std::endl;	
+	scope generatedScope (scopes[scopes.size()-1], true);
 	std::string functionName; //the name of da function
 	std::vector<std::tuple < std::string, std::string >> variables; //the input variables. <name, type>
 	std::string funcReturnType;
@@ -98,7 +109,7 @@ bool functionDefinition () {
 			leaveLoop = false;
 		} else {
 			wpe ("\")\" oder \",\" erwartet, statdessen " + tts (getToken()) + " bekommen.");		
-			leaveLoop = false;	
+		leaveLoop = false;	
 		}
 	}
 	if (!(incPos())) {
@@ -113,7 +124,7 @@ bool functionDefinition () {
 	if (!(getToken () == items::IDENT)) {
 		wpe ("\"Identifizierer\" erwartet, stattdessen " + tts (getToken()) + " bekommen");	
 	}
-	incPos();
+	//incPos();
 	funcReturnType = getTInfo();
 	generatedScope.addVars (variables);
 	std::string inputs = "(";
@@ -123,12 +134,13 @@ bool functionDefinition () {
 		inputs += (returnTypeName (std::get <0> (variables[i])));	
 	}
 	inputs += ")";
-	generatedScope.addCode (
+	totalCode.push_back (
 		returnTypeName (funcReturnType) + " " +
 		functionName + " " +
 	 	inputs + " " +
 		"{"//the scope of the function				
 	);
+	
 	scopes.push_back (generatedScope);
 	isInOutterScope = false;	
 	return hasError;
@@ -136,7 +148,7 @@ bool functionDefinition () {
 
 bool endOfScope () {
 	if (! (getToken () == items::SCOPE_END)) {
-		scopes.end()->code.push_back ("}");
+		totalCode.push_back ("}");
 		decreaseScope();
 		incPos();	
 	}
@@ -164,17 +176,18 @@ void beginOfFile () {
 				       	     //allowed
 		    innerScopeCalls () ||
 		    variableDefinition () //infinite amounts of variable definitionas are allowed
-		)     
-		{
+		) {
+		
 			//valid command
 		} else {
 			wpe ("\"Funktionsdefinition\" oder \"variablendeklaration\" erwartet, stattdessen " + tts (getToken()) + " bekommen.");
 			hasError = true;
 		}
 	}
-	for (auto i : scopes.end()->code) {
+	for (auto i : totalCode) {
 		std::cout << i << std::endl;
 	}	
+	
 }
 
 void parse (std::vector<std::tuple < items, std::string>> input) {

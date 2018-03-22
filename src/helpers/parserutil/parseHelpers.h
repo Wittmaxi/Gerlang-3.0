@@ -1,7 +1,7 @@
 struct variable {
 	std::string type;
 	std::string name;
-	bool isInit;
+	bool isInit = false;
 };
 
 variable parseVariable () { //look for variables
@@ -11,8 +11,9 @@ variable parseVariable () { //look for variables
 			returnVar.type = returnTypeName(getTInfo());
 			incPos ();
 			if (!(getToken () == items::VAR_DECL)) {
-				wpe ("\"variable\" erwartet, stattdessen " + tts (getToken()) + " bekommen.");	
+				return returnVar;	
 			}
+			returnVar.isInit = true;
 			incPos ();
 			if (!(getToken () == items::IDENT)) { //the name
 				wpe ("\"Identifizierer\" erwartet, stattdessen " + tts (getToken()) + " bekommen.");
@@ -27,7 +28,6 @@ variable parseVariable () { //look for variables
 			wpe ("Dateityp " + getTInfo() + " existiert nicht.");
 		}
 		incPos();
-		returnVar.isInit = true;
 		return returnVar; 
 	}
 	//if its not a variable
@@ -35,3 +35,4 @@ variable parseVariable () { //look for variables
 
 }
 
+//std::string parseRvalCode

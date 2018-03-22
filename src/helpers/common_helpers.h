@@ -32,6 +32,16 @@ void printVect (std::vector<std::string> T) {
 	}
 }
 
+
+template <typename T> bool isInVec (T item, std::vector<T> toFindIn) {
+	for (T i : toFindIn) {
+		if (i == item) {
+			return true;
+		}
+	}
+	return false;
+} 
+
 bool isStandardType (std::string name) {
 	if (
 		name == "boolesche"   ||
@@ -44,6 +54,10 @@ bool isStandardType (std::string name) {
 	return false;
 }
 
+bool typeExists (std::string name) {
+	return isInVec <std::string> ( name, types);
+}
+
 std::string returnTypeName (std::string name) {
 	if (isStandardType (name)) {
 		if (name == "boolesche") {return std::string("bool");}
@@ -54,11 +68,3 @@ std::string returnTypeName (std::string name) {
 	return name;
 }
 
-template <typename T> bool isInVec (T item, std::vector<T> toFindIn) {
-	for (T i : toFindIn) {
-		if (i == item) {
-			return true;
-		}
-	}
-	return false;
-} 
