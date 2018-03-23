@@ -21,7 +21,8 @@ enum class items{
 	INT_RVAL,
 	FLOAT_RVAL,
 	//variable declarations
-	VAR_DECL
+	VAR_DECL,
+	NEW_LINE
 };
 
 std::vector <std::string> types { //vector containing the item types. Will be used later when  

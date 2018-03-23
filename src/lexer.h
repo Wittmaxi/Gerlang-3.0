@@ -20,6 +20,7 @@ bool isDelim (char input) {
 		case '*':
 		case ',':
 		case '/':
+		case 0x06:
 			{
 				return true;
 			}
@@ -93,9 +94,11 @@ bool handleKeyW (std::string expression) {
 		addToOutput (items::LOOP);
 	} else if (expression == "variable") {
 		addToOutput (items::VAR_DECL);
+	} else if (expression[0] == 0x06) {
+		addToOutput (items::NEW_LINE);	
 	} else if (handleRvals (expression)) {
 		//already appended
-	} else {
+	}  else {
 		addToOutput (items::IDENT, expression);
 	} //it must be an identifier, so append it as one
 	return true;	
@@ -103,7 +106,7 @@ bool handleKeyW (std::string expression) {
 
 void evalExpression (std::string expression) {
 	std::cout << "Current expression: " << expression << std::endl;
-	if (isDelim (expression[0])) {
+	if (isDelim (expression[0]) && expression[0] != 0x06) {
 		addToOutput(items::DELIM, expression);
 	} else if (expression == "" || expression == " ") {
 		//do nothing

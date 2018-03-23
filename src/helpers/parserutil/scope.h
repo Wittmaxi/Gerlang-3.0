@@ -6,10 +6,8 @@ public: //since i'm the only user of scope, it might as well be public
 	scope (const scope& other, const bool i) { //copy all the variables/functions etc
 						   // the bool is just so that the scope function 
 						   // triggered by normal copying of scope 
-		std::cout << "1" << std::endl;
 		types = other.types;
 		variables = other.variables;
-		std::cout << "2" << std::endl;
 	}
 	void addVars (std::vector<std::tuple<std::string, std::string>> vars) { 
 		//takes in a vector of <variablename, typedenominator>

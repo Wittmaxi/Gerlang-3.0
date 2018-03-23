@@ -49,24 +49,21 @@ std::string sanitizeFile (std::vector<std::string> file) { //takes a file, remov
 	char cchar;	
 	std::string outputString;
 	for (int i = 0; i < file.size(); i++) { 
-		for (int j = 0; j < file[i].size(); j++) {
+		for (int j = 0; j < file[i].size(); j++) { //new line
 			cchar = file[i][j];
 			if ((cchar == 0x09)) {  //if the string is a character 
 				                //that has to be skipped
 				cchar = 0x07;
 			}
 			if (cchar == ' ') {
-				while (file[i][j +1] == ' ' && j < file[i].size()) {
-					j++;
-				}
 				cchar = 0x07;
 			}
-			if (cchar == '#' || cchar == '~') {
+			if (cchar == '#' || cchar == '~') { //comment of precompiler thingy
 				break;
 			}
 			outputString += cchar;
 		}
-		outputString += 0x07; //for new lines. 
+		outputString += 0x06; //for new lines. 
 	}
 	std::cout << outputString << std::endl;
 	return outputString; 
@@ -108,81 +105,51 @@ bool isFloat (std::string val) {
 	return hasPoint;
 }
 
-std::ostream& operator<< (std::ostream& os, std::tuple<items, std::string> toPrint) {
-	items token = std::get <0> (toPrint);
-	std::string typeN;
-	if (token == items::DELIM) {
-		typeN = "DELIMITOR";
-	} else if (token == items::MAIN_FUNC) {
-		typeN = "MAIN_FUNC";
-	} else if (token == items::FUNCTION_1) {
-		typeN = "FUNCTION_1";
-	} else if (token == items::FUNCTION_2) {
-		typeN = "FUNCTION_2";
-	} else if (token == items::RETURN_1) {
-		typeN = "RETURN_1";
-	} else if (token == items::RETURN_2) {
-		typeN = "RETURN_2";
-	} else if (token == items::COND) {
-		typeN = "COND";
-	} else if (token == items::LOOP) {
-		typeN = "LOOP";
-	} else if (token == items::IDENT) {
-		typeN = "IDENT";
-	} else if (token == items::BOOL_RVAL) {
-		typeN = "BOOL_RVAL";
-	} else if (token == items::CHAR_RVAL) {
-		typeN = "CHAR_RVAL";
-	} else if (token == items::INT_RVAL) {
-		typeN = "INT_RVAL";
-	} else if (token == items::FLOAT_RVAL) {
-		typeN = "FLOAT_RVAL";
-	} else if (token == items::VAR_DECL) {
-		typeN = "VAR_DECL";
-	} else if (token == items::SCOPE_END) {
-		typeN = "SCOPE_END";
-	}
-	os << "token: " << typeN << " - additional info: " << std::get <1> (toPrint); 
-	return os;
-}
-
 std::string tts (items toPrint) { //token to string
 	items token = toPrint;
 	std::string typeN;
 	if (token == items::DELIM) {
-		typeN = "DELIMITOR";
+		typeN = "Abgrenzer";
 	} else if (token == items::MAIN_FUNC) {
-		typeN = "MAIN_FUNC";
+		typeN = "Haupt-Funktion";
 	} else if (token == items::FUNCTION_1) {
-		typeN = "FUNCTION_1";
+		typeN = "Funktion";
 	} else if (token == items::FUNCTION_2) {
-		typeN = "FUNCTION_2";
+		typeN = "Funktionsrückgabe";
 	} else if (token == items::RETURN_1) {
-		typeN = "RETURN_1";
+		typeN = "Rückgabe 1";
 	} else if (token == items::RETURN_2) {
-		typeN = "RETURN_2";
+		typeN = "Rückgabe 2";
 	} else if (token == items::COND) {
-		typeN = "COND";
+		typeN = "Vergleich";
 	} else if (token == items::LOOP) {
-		typeN = "LOOP";
+		typeN = "Schleife";
 	} else if (token == items::IDENT) {
-		typeN = "IDENT";
+		typeN = "Identifizierer";
 	} else if (token == items::BOOL_RVAL) {
-		typeN = "BOOL_RVAL";
+		typeN = "Booleanwert";
 	} else if (token == items::CHAR_RVAL) {
-		typeN = "CHAR_RVAL";
+		typeN = "Charakterwert";
 	} else if (token == items::INT_RVAL) {
-		typeN = "INT_RVAL";
+		typeN = "Ganzzahlwert";
 	} else if (token == items::FLOAT_RVAL) {
-		typeN = "FLOAT_RVAL";
+		typeN = "Fliesskommawert";
 	} else if (token == items::VAR_DECL) {
-		typeN = "VAR_DECL";
+		typeN = "Variablendeklaration";
 	} else if (token == items::SCOPE_END) {
-		typeN = "SCOPE_END";
+		typeN = "Blockende";
+	} else if (token == items::NEW_LINE) {
+		typeN = "Neue Zeile";
 	}
 	return typeN;
 }
 
+
+std::ostream& operator<< (std::ostream& os, std::tuple<items, std::string> toPrint) {
+	items token = std::get <0> (toPrint);
+	os << "token: " << tts (token) << " - additional info: " << std::get <1> (toPrint); 
+	return os;
+}
 
 
 

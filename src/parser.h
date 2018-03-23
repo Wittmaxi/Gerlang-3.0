@@ -68,7 +68,6 @@ bool functionDefinition () {
 	if (!(getToken() == items::FUNCTION_1)) {
 		return false; //it's not a function definition
 	}
-	std::cout << "function definitions" << std::endl;	
 	scope generatedScope (scopes[scopes.size()-1], true);
 	std::string functionName; //the name of da function
 	std::vector<std::tuple < std::string, std::string >> variables; //the input variables. <name, type>
@@ -95,7 +94,6 @@ bool functionDefinition () {
 	bool leaveLoop = true;
 	while (leaveLoop) {
 		//variable definitions in functions
-		std::cout << "varsllooooooppppp" << std::endl;	
 		variable currentVar;
 		currentVar = parseVariable();
 		if ((! currentVar.isInit) && (!(getTInfo() == ")"))) {
