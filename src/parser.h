@@ -185,7 +185,9 @@ void beginOfFile () {
 		    innerScopeCalls () ||
 		    variableDefinition () //infinite amounts of variable definitionas are allowed
 		) {
-		
+			if (positionInLine < currentLine.size()) {
+				wpe ("\"Neue Zeile\" erwartet, stattdessen " + tts (getToken()) + " bekommen.");
+			}		
 			//valid command
 		} else {
 			wpe ("\"Funktionsdefinition\" oder \"variablendeklaration\" erwartet, stattdessen " + tts (getToken()) + " bekommen.");
@@ -198,10 +200,11 @@ void beginOfFile () {
 	
 }
 
-void parse (std::vector<std::tuple < items, std::string>> input) {
+bool parse (std::vector<std::tuple < items, std::string>> input) { //returns wether parsing was successful
 	//parses and generates the C++ code of the thing.	
 	lexerTokens = input;
 	scope outterScope;
 	scopes.push_back (outterScope);
 	beginOfFile ();
+	return hasError;
 }
