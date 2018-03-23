@@ -2,7 +2,7 @@ bool operator== (std::tuple <items, std::string> _1, items _2) {
 	return (std::get <0> (_1) == _2);
 }
 bool operator!= (std::tuple <items, std::string> _1, items _2) {
-	return (std::get <0> (_1) == _2);
+	return (std::get <0> (_1) != _2);
 }
 
 
@@ -49,6 +49,7 @@ void getLineTokens ()  {
 		currentLine.push_back (lexerTokens [positionInLexerToken]);	
 		positionInLexerToken ++;
 	}
+	positionInLexerToken ++;
 }
 
 //std::string parseRvalCode

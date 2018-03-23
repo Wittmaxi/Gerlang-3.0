@@ -2,6 +2,7 @@
 
 std::vector<std::tuple < items, std::string >> lexerTokens;
 int positionInLexerToken;
+int positionInLine;
 int lineNumber;
 std::vector <std::tuple < items, std::string >> currentLine;
 bool hasError;	//dont proceed, if the code didnt pass through the CFG
@@ -14,11 +15,11 @@ std::vector<std::string> totalCode;
 //////////UTILITIES
 
 items getToken () { //get the current token
-	return std::get <0> (lexerTokens[positionInLexerToken]);
+	return std::get <0> (lexerTokens[positionInLine]);
 }
 
 std::string getTInfo () { //get the current information to the tokens
-	return std::get <1> (lexerTokens[positionInLexerToken]);
+	return std::get <1> (lexerTokens[positionInLine]);
 }
 
 void wpe(std::string error) { //write a parser error to stdout
@@ -27,12 +28,12 @@ void wpe(std::string error) { //write a parser error to stdout
 }
 
 bool incPos () {
-	if (positionInLexerToken > lexerTokens.size()) {
+	if (positionInLine > currentLine.size()) {
 		return false;
 		hasError = true;
 	}	
-	positionInLexerToken ++;
-	return true;
+	positionInLine++;
+       	return true;
 }
 
 void decreaseScope () {
@@ -172,6 +173,13 @@ void beginOfFile () {
 	while ((positionInLexerToken < lexerTokens.size()) && !(hasError)) {
 		//if the current token is either a function definition or a variable definition
 		//as is allowed
+		getLineTokens();
+		std::cout << "<<<<<<<<< " << std::endl;
+		for (auto i : currentLine) {
+			std::cout << i << std::endl;
+		}
+		std::cout << "<<<<<<<<< " << std::endl;
+		lineNumber ++;
 		if (functionDefinition () || //infinite amount of function definitions are 
 				       	     //allowed
 		    innerScopeCalls () ||
