@@ -1,3 +1,11 @@
+bool operator== (std::tuple <items, std::string> _1, items _2) {
+	return (std::get <0> (_1) == _2);
+}
+bool operator!= (std::tuple <items, std::string> _1, items _2) {
+	return (std::get <0> (_1) == _2);
+}
+
+
 struct variable {
 	std::string type;
 	std::string name;
@@ -33,6 +41,14 @@ variable parseVariable () { //look for variables
 	//if its not a variable
 	return returnVar;
 
+}
+
+void getLineTokens ()  {
+	currentLine.resize(0); //empty the last line
+	while (lexerTokens [positionInLexerToken] != items::NEW_LINE) {
+		currentLine.push_back (lexerTokens [positionInLexerToken]);	
+		positionInLexerToken ++;
+	}
 }
 
 //std::string parseRvalCode

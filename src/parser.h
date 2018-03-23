@@ -2,6 +2,8 @@
 
 std::vector<std::tuple < items, std::string >> lexerTokens;
 int positionInLexerToken;
+int lineNumber;
+std::vector <std::tuple < items, std::string >> currentLine;
 bool hasError;	//dont proceed, if the code didnt pass through the CFG
 bool hasMainFunction;
 std::vector<scope> scopes; //stack of all the scopes. New scopes get the variables of the ones above
@@ -20,7 +22,7 @@ std::string getTInfo () { //get the current information to the tokens
 }
 
 void wpe(std::string error) { //write a parser error to stdout
-	std::cout << "Parser | Fehler: " << error << std::endl;
+	std::cout << "Parser | Fehler, Zeile " << lineNumber << " : " << error << std::endl;
 	hasError = true;
 }
 
