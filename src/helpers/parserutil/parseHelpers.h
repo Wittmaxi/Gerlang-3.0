@@ -15,7 +15,7 @@ struct variable {
 variable parseVariable () { //look for variables
 	variable returnVar;
 	if (getToken () == items::IDENT) { //the type of the var
-		if (!(isInVec<std::string> (getTInfo(), scopes.end()->types) || isStandardType (getTInfo()))) { //the type of vars exists
+		if (isInVec<std::string> (getTInfo(), scopes[scopes.size()-1].types) || isStandardType (getTInfo())) { //the type of vars exists
 			returnVar.type = returnTypeName(getTInfo());
 			incPos ();
 			if (!(getToken () == items::VAR_DECL)) {

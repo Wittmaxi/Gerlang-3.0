@@ -15,11 +15,15 @@ std::vector<std::string> totalCode;
 //////////UTILITIES
 
 items getToken () { //get the current token
-	return std::get <0> (lexerTokens[positionInLine]);
+	if (positionInLine <= currentLine.size())
+			return std::get <0> (lexerTokens[positionInLine]);
+	return items::VOID;
 }
 
 std::string getTInfo () { //get the current information to the tokens
-	return std::get <1> (lexerTokens[positionInLine]);
+	if (positionInLine <= currentLine.size())
+		return std::get <1> (lexerTokens[positionInLine]);
+	return "";
 }
 
 void wpe(std::string error) { //write a parser error to stdout
@@ -41,7 +45,7 @@ void decreaseScope () {
 		//later : throw errors
 	} else {	
 		scopes.resize (scopes.size()-1);
-		isInOutterScope = (scopes.size () == 1) ? true : false;	
+		isInOutterScope = (scopes.size () == 0) ? true : false;	
 	}
 }
 
@@ -148,14 +152,19 @@ bool functionDefinition () {
 }
 
 bool endOfScope () {
-	if (! (getToken () == items::SCOPE_END)) {
+	std::cout << "keks " << tts(getToken()) << std::endl;
+	if (getToken () == items::SCOPE_END) {
+		std::cout << "hi" << std::endl;
 		totalCode.push_back ("}");
 		decreaseScope();
-		incPos();	
+		incPos();
+		return true;	
 	}
+	return false;
 }
 
 bool innerScopeCalls() {
+	std:: cout << "iios : " << isInOutterScope << std::endl;
 	if (! isInOutterScope) {
 		if ( 
 			endOfScope()
@@ -178,7 +187,6 @@ void beginOfFile () {
 		for (auto i : currentLine) {
 			std::cout << i << std::endl;
 		}
-		std::cout << "<<<<<<<<< " << std::endl;
 		lineNumber ++;
 		if (functionDefinition () || //infinite amount of function definitions are 
 				       	     //allowed
@@ -190,7 +198,7 @@ void beginOfFile () {
 			}		
 			//valid command
 		} else {
-			wpe ("\"Funktionsdefinition\" oder \"variablendeklaration\" erwartet, stattdessen " + tts (getToken()) + " bekommen.");
+			wpe ("Unerwarteterweise " + tts (getToken()) + " bekommen.");
 			hasError = true;
 		}
 	}

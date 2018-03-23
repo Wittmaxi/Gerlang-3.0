@@ -22,7 +22,8 @@ enum class items{
 	FLOAT_RVAL,
 	//variable declarations
 	VAR_DECL,
-	NEW_LINE
+	NEW_LINE,
+	VOID //returned in case of nonexistence of token in array
 };
 
 std::vector <std::string> types { //vector containing the item types. Will be used later when  
