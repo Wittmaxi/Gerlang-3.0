@@ -44,12 +44,12 @@ variable parseVariable () { //look for variables
 }
 
 void getLineTokens ()  {
-	currentLine.resize(0); //empty the last line
+	currentLine.clear(); //empty the last line
 	while (lexerTokens [positionInLexerToken] != items::NEW_LINE) {
 		currentLine.push_back (lexerTokens [positionInLexerToken]);	
 		positionInLexerToken ++;
 	}
-	positionInLexerToken ++;
+	positionInLine = 0;
 }
 
 //std::string parseRvalCode

@@ -1,10 +1,10 @@
 #include "helpers/parserutil/scope.h"
 
 std::vector<std::tuple < items, std::string >> lexerTokens;
+std::vector <std::tuple < items, std::string >> currentLine;
 int positionInLexerToken;
 int positionInLine;
 int lineNumber;
-std::vector <std::tuple < items, std::string >> currentLine;
 bool hasError;	//dont proceed, if the code didnt pass through the CFG
 bool hasMainFunction;
 std::vector<scope> scopes; //stack of all the scopes. New scopes get the variables of the ones above
@@ -15,14 +15,14 @@ std::vector<std::string> totalCode;
 //////////UTILITIES
 
 items getToken () { //get the current token
-	if (positionInLine <= currentLine.size())
-			return std::get <0> (lexerTokens[positionInLine]);
+	if (positionInLine < currentLine.size())
+			return std::get <0> (currentLine[positionInLine]);
 	return items::VOID;
 }
 
 std::string getTInfo () { //get the current information to the tokens
-	if (positionInLine <= currentLine.size())
-		return std::get <1> (lexerTokens[positionInLine]);
+	if (positionInLine < currentLine.size())
+		return std::get <1> (currentLine[positionInLine]);
 	return "";
 }
 
@@ -32,10 +32,10 @@ void wpe(std::string error) { //write a parser error to stdout
 }
 
 bool incPos () {
-	if (positionInLine > currentLine.size()) {
-		return false;
-		hasError = true;
-	}	
+//	if (positionInLine > currentLine.size()) {
+//		return false;
+//		hasError = true;
+//	}	
 	positionInLine++;
        	return true;
 }
@@ -52,8 +52,9 @@ void decreaseScope () {
 ///////////PARSE - HELPERS
 
 #include "helpers/parserutil/parseHelpers.h" //include some utilities, that dont NESSECARILY have to be 
-					     //in here
-////////////IMPLEMENTATION
+					     //in this exact file
+
+/////////IMPLEMENTATION
 
 bool variableDefinition () {
 	variable currVar = parseVariable();
@@ -72,6 +73,7 @@ bool variableDefinition () {
 }
 
 bool functionDefinition () {
+	std::cout << tts (getToken()) << std::endl;
 	if (!(getToken() == items::FUNCTION_1)) {
 		return false; //it's not a function definition
 	}
@@ -152,7 +154,6 @@ bool functionDefinition () {
 }
 
 bool endOfScope () {
-	std::cout << "keks " << tts(getToken()) << std::endl;
 	if (getToken () == items::SCOPE_END) {
 		std::cout << "hi" << std::endl;
 		totalCode.push_back ("}");
@@ -164,7 +165,6 @@ bool endOfScope () {
 }
 
 bool innerScopeCalls() {
-	std:: cout << "iios : " << isInOutterScope << std::endl;
 	if (! isInOutterScope) {
 		if ( 
 			endOfScope()
@@ -183,10 +183,11 @@ void beginOfFile () {
 		//if the current token is either a function definition or a variable definition
 		//as is allowed
 		getLineTokens();
-		std::cout << "<<<<<<<<< " << std::endl;
-		for (auto i : currentLine) {
+		std::cout << "><><><><><><" << std::endl;
+		for (auto i: currentLine) {
 			std::cout << i << std::endl;
 		}
+		std::cout << "<><><><><><>" << std::endl;
 		lineNumber ++;
 		if (functionDefinition () || //infinite amount of function definitions are 
 				       	     //allowed

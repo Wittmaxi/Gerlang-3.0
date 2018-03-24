@@ -26,10 +26,3 @@ enum class items{
 	VOID //returned in case of nonexistence of token in array
 };
 
-std::vector <std::string> types { //vector containing the item types. Will be used later when  
-				  //allowing for custom datatypes
-	"int",
-	"double",
-	"char",
-	"bool"
-};

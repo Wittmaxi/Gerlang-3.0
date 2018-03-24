@@ -54,10 +54,6 @@ bool isStandardType (std::string name) {
 	return false;
 }
 
-bool typeExists (std::string name) {
-	return isInVec <std::string> ( name, types);
-}
-
 std::string returnTypeName (std::string name) {
 	if (isStandardType (name)) {
 		if (name == "boolesche") {return std::string("bool");}

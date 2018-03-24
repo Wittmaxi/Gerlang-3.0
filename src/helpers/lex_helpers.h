@@ -140,6 +140,8 @@ std::string tts (items toPrint) { //token to string
 		typeN = "Blockende";
 	} else if (token == items::NEW_LINE) {
 		typeN = "Neue Zeile";
+	} else if (token == items::VOID) {
+		typeN = "Nichts";
 	}
 	return typeN;
 }
