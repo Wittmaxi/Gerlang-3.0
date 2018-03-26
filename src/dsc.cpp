@@ -15,6 +15,7 @@
 #include "finalize.h"
 
 int main (int argc, char** args) {
+//	genStressTest();
 	checkArgs (argc, args);
 	std::vector<std::string> file = cacheFile (target);
 	prec (file);

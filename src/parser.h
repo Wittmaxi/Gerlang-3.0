@@ -58,15 +58,16 @@ void decreaseScope () {
 
 bool variableDefinition () {
 	variable currVar = parseVariable();
+	std::string code = "";
 	if (currVar.isInit == true) { //ITS A VARIABLE!
-		if (getToken() == items::DELIM) {
-			if (getTInfo () != "=") {
-				
-			}
+		code += currVar.type;
+		code += " " + currVar.name;	
+		if (getToken() == items::DELIM && getTInfo () != "=") {
 		}
-		totalCode.push_back (";"); //semicolon, being there
-					   //No matter if there is an
-					   //operation
+		code += ";";	//semicolon, being there
+				//No matter if there is an
+				//operation
+		totalCode.push_back (code);
 	}
 	incPos();	
 	return true;
