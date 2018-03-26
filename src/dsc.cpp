@@ -20,4 +20,5 @@ int main (int argc, char** args) {
 	prec (file);
 	lex (file);
 	parse(lexerOutput);
+	finalize();
 }

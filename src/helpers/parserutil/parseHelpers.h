@@ -49,6 +49,7 @@ void getLineTokens ()  {
 		currentLine.push_back (lexerTokens [positionInLexerToken]);	
 		positionInLexerToken ++;
 	}
+	++positionInLexerToken;
 	positionInLine = 0;
 }
 

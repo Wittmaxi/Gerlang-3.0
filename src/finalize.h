@@ -1,6 +1,6 @@
 void writeToOutFile () {
 	std::ofstream outFile (std::string(out), std::ofstream::out);
-	for (auto i : outCode) {
+	for (auto i : totalCode) {
 		outFile << i << std::endl;
 	}
 }

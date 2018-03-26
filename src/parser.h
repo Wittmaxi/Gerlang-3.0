@@ -202,6 +202,7 @@ void beginOfFile () {
 			wpe ("Unerwarteterweise " + tts (getToken()) + " bekommen.");
 			hasError = true;
 		}
+		std::cout << "PLT" << positionInLexerToken << std::endl;
 	}
 	for (auto i : totalCode) {
 		std::cout << i << std::endl;
