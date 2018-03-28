@@ -8,6 +8,7 @@ public: //since i'm the only user of scope, it might as well be public
 						   // triggered by normal copying of scope 
 		types = other.types;
 		variables = other.variables;
+		functions = other.functions;
 	}
 	void addVars (std::vector<std::tuple<std::string, std::string>> vars) { 
 		//takes in a vector of <variablename, typedenominator>
@@ -36,6 +37,7 @@ public: //since i'm the only user of scope, it might as well be public
 		return "";
 	}
 	std::vector<std::string> types; //important for later	
-	std::vector<std::tuple <std::string, std::string>> variables;
+	std::vector<std::tuple <std::string, std::string>> variables; //name; type
+	std::vector<std::tuple <std::string, std::string>> functions; //name; type
 	bool anynome;
 };

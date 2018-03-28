@@ -5,6 +5,23 @@ bool operator!= (std::tuple <items, std::string> _1, items _2) {
 	return (std::get <0> (_1) != _2);
 }
 
+bool identAlreadyExists (std::string identName) {
+	for (auto i : scopes[scopes.size()-1].variables) {
+		if (std::get<0> (i) == identName) {
+			return true;
+		}
+	}
+	for (auto i: scopes[scopes.size()-1].functions) {
+		if (std::get<0> (i) == identName) {
+			return true;
+		}
+	}
+	return false;	
+}
+
+bool identValid (std::string identName) {
+	return !(identAlreadyExists (identName));
+}
 
 struct variable {
 	std::string type;
@@ -26,10 +43,8 @@ variable parseVariable () { //look for variables
 			if (!(getToken () == items::IDENT)) { //the name
 				wpe ("\"Identifizierer\" erwartet, stattdessen " + tts (getToken()) + " bekommen.");
 			}
-			for (auto i : scopes.end()->variables) { // to be changed later
-				if (std::get <0> (i) == getTInfo ()) {
-					wpe ("Variablenname " + getTInfo() + " ist schon benutzt.");
-				}
+			if (!identValid(getTInfo())) {
+				wpe ("Variablenname " + getTInfo() + " ist ungültig oder schon benutzt.");
 			}
 			returnVar.name = getTInfo ();		
 		} else {
@@ -52,5 +67,3 @@ void getLineTokens ()  {
 	++positionInLexerToken;
 	positionInLine = 0;
 }
-
-//std::string parseRvalCode

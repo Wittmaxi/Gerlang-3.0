@@ -15,11 +15,15 @@
 #include "finalize.h"
 
 int main (int argc, char** args) {
-//	genStressTest();
 	checkArgs (argc, args);
+	if (genBench) { //if asked to, generate a benchmark file
+		genStressTest();
+	}
 	std::vector<std::string> file = cacheFile (target);
 	prec (file);
 	lex (file);
 	parse(lexerOutput);
-	finalize();
+	if (!hasError) {
+		finalize();
+	}
 }

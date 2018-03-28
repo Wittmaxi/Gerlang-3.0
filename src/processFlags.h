@@ -1,6 +1,6 @@
 char* target; 
 char* out;
-
+bool genBench = false;
 
 void addTarget (char* _target) {
 	std::string filename (_target);
@@ -18,6 +18,8 @@ void checkArgs (int argc, char** args) {
 		std::cout << current << std::endl;
 		if (current == "-a") {
 			out = args[++i];
+		} else if (current == "-genBenchFile") {
+		 	genBench = true;      
 		} else {
 			addTarget (args[i]); 
 		}
