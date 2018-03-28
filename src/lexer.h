@@ -34,12 +34,7 @@ bool isDelim (char input) {
 
 bool isItem (char input) {
 {
-	if ((isDelim (input)) || (input == 0x07)) {
-		return true;
-	} else 
-		return false;
-	}
-	return true;
+	return ((isDelim (input)) || (input == 0x07)) {
 }
 
 std::string readTilNextExpr () {

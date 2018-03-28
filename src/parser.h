@@ -60,6 +60,20 @@ void decreaseScope () {
 
 /////////IMPLEMENTATION
 
+bool operation () {
+	if (getToken () == items::IDENT) { //it might be an operation. lets see how it continues
+		incPos ();
+		if (getToken () == items::DELIM && getTInfo () == "=") {
+			while (getToken () != NEW_LINE) { //parse until a new line was started
+
+			}
+		} else {
+			positionInLine--;
+		}
+			
+	}
+}
+
 bool mainFunction () {
 	if (getToken() == items::MAIN_FUNC) {
 
