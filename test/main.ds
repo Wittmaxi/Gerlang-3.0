@@ -1,5 +1,6 @@
+ganzzahl variable hallo
 funktion hallo () ergibt ganzzahl
-
+	hallo = 2 + 3 * 9
 ende
 
 funktion hallo2 () ergibt charakter

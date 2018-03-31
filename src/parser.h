@@ -61,15 +61,26 @@ void decreaseScope () {
 /////////IMPLEMENTATION
 
 bool operation () {
+	std::string operationType;	
 	if (getToken () == items::IDENT) { //it might be an operation. lets see how it continues
+		if (!( //get the type of the variables operated with
+			outterScope().varExists (getTInfo())  ||
+			outterScope().funcExists (getTInfo()) 		
+		)) {
+			operationType = outterScope().getType(getTInfo());
+		}
 		incPos ();
 		if (getToken () == items::DELIM && getTInfo () == "=") {
-			while (getToken () != NEW_LINE) { //parse until a new line was started
-
+			bool state = true; // true - needs identifier
+					    // false - needs operator
+			while (getToken () != items::NEW_LINE) { //parse until a new line was started
+											
 			}
 		} else {
+			return false;
 			positionInLine--;
 		}
+		return false;
 			
 	}
 }

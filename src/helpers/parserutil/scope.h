@@ -27,14 +27,34 @@ public: //since i'm the only user of scope, it might as well be public
 		} 
 		return false;
 	}
-
-	std::string getVarType (std::string name) {
-		for (auto i : variables) {
-			if (std::get <0> (i) == name) {
-				return std::get<1> (i);
+	bool funcExists (std::string name) {
+		for (auto i: functions) {
+			if (std::get<0> (i) == name) {
+				return true;
 			}
-		} 
-		return "";
+		}
+		return false;
+	}
+	std::string getType (std::string name) {
+		if (varExists (name)) {
+			return varType (name);
+		} else {
+			return funcType (name);
+		}
+	}
+	std::string varType (std::string name) { //assuming the var exists
+		for (auto i: variables) {
+			if (std::get<0> (i) == name) {
+				return std::get<1> (i);	
+			}
+		}	
+	}
+	std::string funcType (std::string name) {
+		for (auto i: functions) {
+			if (std::get<0> (i) == name) {
+				return std::get<1> (i);	
+			}
+		}	
 	}
 	std::vector<std::string> types; //important for later	
 	std::vector<std::tuple <std::string, std::string>> variables; //name; type
