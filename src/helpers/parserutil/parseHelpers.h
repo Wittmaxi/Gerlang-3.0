@@ -48,9 +48,9 @@ variable parseVariable () { //look for variables
 			}
 			returnVar.name = getTInfo ();		
 		} else {
-			wpe ("Dateityp " + getTInfo() + " existiert nicht.");
-		}
-		incPos();
+      return returnVar;
+    }
+    incPos();
 		return returnVar; 
 	}
 	//if its not a variable

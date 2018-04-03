@@ -1,4 +1,5 @@
-ganzzahl variable hallo
+ganzzahl variable hallo_variable
+
 funktion hallo () ergibt ganzzahl
 	hallo = 2 + 3 * 9
 ende
