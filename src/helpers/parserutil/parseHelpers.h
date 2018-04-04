@@ -29,6 +29,13 @@ struct variable {
 	bool isInit = false;
 };
 
+bool isRval (items item) {
+  if (item ==  BOOL_RVAL || item == CHAR_RVAL || item == INT_RVAL || item == FLOAT_RVAL) {
+    return true;
+  }    
+  return false;
+}
+
 variable parseVariable () { //look for variables
 	variable returnVar;
 	if (getToken () == items::IDENT) { //the type of the var
