@@ -2,17 +2,14 @@ std::pair <std::string, std::string> findAssignements (std::string line) {
 	std::string s1;
 	std::string s2;
 	bool afterOperator = false;
-	for (size_t i = 0; i < line.size(); i++)  {
-		if (line[i] == '=') {
+	for (size_t i = 0; i < line.size(); i++) 
+		if (line[i] == '=') 
 			afterOperator = true;
-		} else {
-			if (afterOperator) {
+		else 
+			if (afterOperator)
 				s2 += line[i];
-			} else {
+			else
 				s1 += line[i];
-			}
-		}
-	}
 	return std::make_pair (s1, s2);
 }
 
@@ -42,48 +39,36 @@ bool isOperator (char op) {
 	}
 }
 
-std::string sanitizeFile (std::vector<std::string> file) { //takes a file, removes all spaces; nlines
-							   //and tabulators; replacing them with a unicode 
-							   //character that isnt used in text (0x07)
-							   //thus creating a sole string
+std::string sanitizeFile (std::vector<std::string> file) {
 	char cchar;	
 	std::string outputString;
 	for (int i = 0; i < file.size(); i++) { 
-		for (int j = 0; j < file[i].size(); j++) { //new line
+		for (int j = 0; j < file[i].size(); j++) {
 			cchar = file[i][j];
-			if ((cchar == 0x09)) {  //if the string is a character 
-				                //that has to be skipped
+			if ((cchar == 0x09)) 
 				cchar = 0x07;
-			}
-			if (cchar == ' ') {
+			else if (cchar == ' ')
 				cchar = 0x07;
-			}
-			if (cchar == '#' || cchar == '~') { //comment of precompiler thingy
+			else if (cchar == '#' || cchar == '~')
 				break;
-			}
 			outputString += cchar;
 		}
-		outputString += 0x06; //for new lines. 
+		outputString += 0x06;
 	}
 	std::cout << outputString << std::endl;
 	return outputString; 
 }
 
 bool isBool (std::string val) {
-	if ((val == "wahr") || (val == "falsch")) {
+	if ((val == "wahr") || (val == "falsch"))
 		return true;
-	}
 	return false;
 }
 
 bool isInt (std::string val) {
-	for (int i = 0; i < val.size(); i++) {
-		if ((val[i] > '9') || (val[i] < '0')) { //check if character value doesnt 
-							  //correspond with normal character values
-							  //for integers/numbers
+	for (int i = 0; i < val.size(); i++)
+		if ((val[i] > '9') || (val[i] < '0'))
 			return false;	
-		}
-	}
 	return (val.size() > 0) ? true : false;
 }
 
@@ -108,41 +93,41 @@ bool isFloat (std::string val) {
 std::string tts (items toPrint) { //token to string
 	items token = toPrint;
 	std::string typeN;
-	if (token == items::DELIM) {
+	if (token == items::DELIM)
 		typeN = "Abgrenzer";
-	} else if (token == items::MAIN_FUNC) {
+	 else if (token == items::MAIN_FUNC) 
 		typeN = "Haupt-Funktion";
-	} else if (token == items::FUNCTION_1) {
+	 else if (token == items::FUNCTION_1)
 		typeN = "Funktion";
-	} else if (token == items::FUNCTION_2) {
+	 else if (token == items::FUNCTION_2)
 		typeN = "Funktionsrückgabe";
-	} else if (token == items::RETURN_1) {
-		typeN = "Rückgabe 1";
-	} else if (token == items::RETURN_2) {
+	 else if (token == items::RETURN_1) 
+	 	typeN = "Rückgabe 1";
+	 else if (token == items::RETURN_2)
 		typeN = "Rückgabe 2";
-	} else if (token == items::COND) {
+	 else if (token == items::COND) 
 		typeN = "Vergleich";
-	} else if (token == items::LOOP) {
+	 else if (token == items::LOOP)
 		typeN = "Schleife";
-	} else if (token == items::IDENT) {
+	 else if (token == items::IDENT)
 		typeN = "Identifizierer";
-	} else if (token == items::BOOL_RVAL) {
+	 else if (token == items::BOOL_RVAL)
 		typeN = "Booleanwert";
-	} else if (token == items::CHAR_RVAL) {
+	 else if (token == items::CHAR_RVAL)
 		typeN = "Charakterwert";
-	} else if (token == items::INT_RVAL) {
-		typeN = "Ganzzahlwert";
-	} else if (token == items::FLOAT_RVAL) {
+	 else if (token == items::INT_RVAL) 
+	 	typeN = "Ganzzahlwert";
+	 else if (token == items::FLOAT_RVAL)
 		typeN = "Fliesskommawert";
-	} else if (token == items::VAR_DECL) {
-		typeN = "Variablendeklaration";
-	} else if (token == items::SCOPE_END) {
+	 else if (token == items::VAR_DECL) 
+	 	typeN = "Variablendeklaration";
+	 else if (token == items::SCOPE_END)
 		typeN = "Blockende";
-	} else if (token == items::NEW_LINE) {
+	 else if (token == items::NEW_LINE) 
 		typeN = "Neue Zeile";
-	} else if (token == items::VOID) {
+	 else if (token == items::VOID) 
 		typeN = "Nichts";
-	}
+	
 	return typeN;
 }
 

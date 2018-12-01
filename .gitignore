@@ -8,3 +8,4 @@ program1\.cpp
 out.txt
 
 *.sw*
+test/main.ds
