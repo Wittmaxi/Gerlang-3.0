@@ -43,8 +43,7 @@ bool isInVec(T item, std::vector<T> toFindIn)
 
 bool isStandardType(std::string name)
 {
-	if (
-		name == "boolesche" ||
+	if (name == "boolesche" ||
 		name == "ganzzahl" ||
 		name == "charakter" ||
 		name == "fliesskomma")

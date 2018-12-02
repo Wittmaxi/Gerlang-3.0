@@ -5,14 +5,12 @@ std::vector<std::tuple<items, std::string>> currentLine;
 int positionInLexerToken;
 int positionInLine;
 int lineNumber;
-bool hasError; //dont proceed, if the code didnt pass through the CFG
+bool hasError;
 bool hasMainFunction;
-std::vector<scope> scopes;        //stack of all the outterScope(). New scopes get the variables of the ones above
-std::vector<std::string> outCode; //the code that the parser outputs
+std::vector<scope> scopes;        
+std::vector<std::string> outCode; 
 bool isInOutterScope;
 std::vector<std::string> totalCode;
-
-//////////UTILITIES
 
 scope &outterScope()
 {
@@ -20,21 +18,21 @@ scope &outterScope()
 }
 
 items getToken()
-{ //get the current token
+{
   if (positionInLine < currentLine.size())
     return std::get<0>(currentLine[positionInLine]);
   return items::VOID;
 }
 
 std::string getTInfo()
-{ //get the current information to the tokens
+{ 
   if (positionInLine < currentLine.size())
     return std::get<1>(currentLine[positionInLine]);
   return "";
 }
 
 void wpe(std::string error)
-{ //write a parser error to stdout
+{
   std::cout << "Parser | Fehler, Zeile " << lineNumber << " : " << error << std::endl;
   hasError = true;
 }
@@ -48,9 +46,7 @@ bool incPos()
 void decreaseScope()
 {
   if (scopes.size() == 1)
-  {
     wpe("\"ende\" bekommen, aber kein Block zum schliessen gefunden.");
-  }
   else
   {
     scopes.resize(scopes.size() - 1);
@@ -142,108 +138,74 @@ bool variableDefinition()
   variable currVar = parseVariable();
   std::string code = "";
   if (currVar.isInit == true)
-  { //ITS A VARIABLE!
+  { 
     code += currVar.type;
     code += " " + currVar.name;
     outterScope().addVar(std::make_pair(currVar.name, currVar.type));
     if (getToken() == items::DELIM && getTInfo() != "=")
     {
+      //TODO
     }
-    code += ";"; //semicolon, being there
-    //No matter if there is an
-    //operation
+    code += ";";
     totalCode.push_back(code);
   }
   incPos();
   return true;
 }
 
-bool functionDefinition()
-{
-  std::cout << tts(getToken()) << std::endl;
-  if (!(getToken() == items::FUNCTION_1))
+void variablesInFunctionDecl (std::vector<std::tuple<std::string, std::string>> &variables) {
+  while (true)
   {
-    return false; //it's not a function definition
-  }
-  std::string functionName;                                    //the name of da function
-  std::vector<std::tuple<std::string, std::string>> variables; //the input variables. <name, type>
-  std::string funcReturnType;
-
-  if (!(incPos()))
-  {
-    wpe("\"Identifizierer\" erwartet, stattdessen \"Dateiende\" gefunden.");
-  }
-  if (getToken() == items::IDENT)
-  {
-    if (identValid(getTInfo()))
-    {
-      functionName = getTInfo();
-    }
-    else
-    {
-      wpe("Funktionsname " + getTInfo() + " ist ungültig oder schon benutzt");
-    }
-  }
-  else
-  {
-    wpe("\"Identifizierer\" erwartet, stattdessen " + tts(getToken()) + " bekommen.");
-  }
-  if (!(incPos()))
-  {
-    wpe("\"(\" erwartet, stattdessen \"Dateiende\" gefunden");
-  }
-  if (!(getToken() == items::DELIM && getTInfo() == "("))
-  {
-    wpe("\"(\" erwartet, stattdessen " + tts(getToken()) + " bekommen.");
-  }
-  if (!incPos())
-  {
-    wpe("\"Variablendeklaration\" oder \")\" erwartet, stattdessen " + tts(getToken()) +
-        " bekommen.");
-  }
-  bool leaveLoop = true;
-  while (leaveLoop)
-  {
-    //variable definitions in functions
     variable currentVar;
     currentVar = parseVariable();
     if ((!currentVar.isInit) && (!(getTInfo() == ")")))
-    {
       wpe("Variablendeklaration erwartet.");
-    }
     else
-    {
       variables.push_back(std::make_pair(currentVar.name, currentVar.type));
-    }
     if (getTInfo() == ",")
     {
     }
     else if (getTInfo() == ")")
-    {
-      leaveLoop = false;
-    }
-    else
-    {
+      break;
+    else {
       wpe("\")\" oder \",\" erwartet, statdessen " + tts(getToken()) + " bekommen.");
-      leaveLoop = false;
+      break; 
     }
   }
+}
+
+bool functionDefinition()
+{
+  if (!(getToken() == items::FUNCTION_1))
+    return false; 
+  std::string functionName;                                    
+  std::vector<std::tuple<std::string, std::string>> variables;
+  std::string funcReturnType;
+
   if (!(incPos()))
-  {
+    wpe("\"Identifizierer\" erwartet, stattdessen \"Dateiende\" gefunden.");
+  if (getToken() == items::IDENT)
+    if (identValid(getTInfo()))
+      functionName = getTInfo();
+    else
+      wpe("Funktionsname " + getTInfo() + " ist ungültig oder schon benutzt");
+  else
+    wpe("\"Identifizierer\" erwartet, stattdessen " + tts(getToken()) + " bekommen.");
+  if (!(incPos()))
+    wpe("\"(\" erwartet, stattdessen \"Dateiende\" gefunden");
+  if (!(getToken() == items::DELIM && getTInfo() == "("))
+    wpe("\"(\" erwartet, stattdessen " + tts(getToken()) + " bekommen.");
+  if (!incPos())
+    wpe("\"Variablendeklaration\" oder \")\" erwartet, stattdessen " + tts(getToken()) + " bekommen.");
+  variablesInFunctionDecl(variables);
+  if (!(incPos()))
     wpe("\"ergibt\" erwartet, stattdessen \"Dateiende\" bekommen.");
-  }
-  if (!(getToken() == items::FUNCTION_2))
-  {
+  if (getToken() != items::FUNCTION_2)
     wpe("\"ergibt\" erwartet, statdessen " + tts(getToken()) + " bekommen");
-  }
   if (!(incPos()))
-  {
     wpe("\"Identifizierer\" erwartet, stattdessen \"Dateiende\" bekommen.");
-  }
-  if (!(getToken() == items::IDENT))
-  {
+  if (getToken() != items::IDENT)
     wpe("\"Identifizierer\" erwartet, stattdessen " + tts(getToken()) + " bekommen");
-  }
   //incPos();
   funcReturnType = getTInfo();
   outterScope().functions.push_back(function(functionName, funcReturnType));
@@ -253,19 +215,12 @@ bool functionDefinition()
   for (int i = 0; i < variables.size(); i++)
   {
     if (i != 0)
-    {
       inputs += ",";
-    }
-    inputs += (returnTypeName(std::get<1>(variables[i])));
+    inputs += (returnTypeName(std::get<1>(variables[i]))) + " ";
     inputs += (returnTypeName(std::get<0>(variables[i])));
   }
   inputs += ")";
-  totalCode.push_back(
-      returnTypeName(funcReturnType) + " " +
-      functionName + " " +
-      inputs + " " +
-      "{" //the scope of the function
-  );
+  totalCode.push_back(returnTypeName(funcReturnType) + " " + functionName + " " + inputs + " " + "{");
   scopes.push_back(generatedScope);
   isInOutterScope = false;
   return hasError;
@@ -312,13 +267,9 @@ void beginOfFile()
     std::cout << "PLT" << positionInLexerToken << std::endl;
   }
   if (!hasMainFunction)
-  {
     wpe("Keine anfangs-funktion im Programm gefunden.");
-  }
   for (auto i : totalCode)
-  {
     std::cout << i << std::endl;
-  }
 }
 
 bool parse(std::vector<std::tuple<items, std::string>> input)
