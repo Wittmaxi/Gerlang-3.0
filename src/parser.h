@@ -7,8 +7,8 @@ int positionInLine;
 int lineNumber;
 bool hasError;
 bool hasMainFunction;
-std::vector<scope> scopes;        
-std::vector<std::string> outCode; 
+std::vector<scope> scopes;
+std::vector<std::string> outCode;
 bool isInOutterScope;
 std::vector<std::string> totalCode;
 
@@ -25,7 +25,7 @@ items getToken()
 }
 
 std::string getTInfo()
-{ 
+{
   if (positionInLine < currentLine.size())
     return std::get<1>(currentLine[positionInLine]);
   return "";
@@ -54,7 +54,7 @@ void decreaseScope()
   }
 }
 
-#include "helpers/parserutil/parseHelpers.h" 
+#include "helpers/parserutil/parseHelpers.h"
 
 std::string handleFunctionCall()
 {
@@ -63,7 +63,7 @@ std::string handleFunctionCall()
 
   fcall += funName;
 
-  function func (funName, "");
+  function func(funName, "");
 
   func = outterScope().getFunc(funName);
 
@@ -73,48 +73,47 @@ std::string handleFunctionCall()
   return fcall;
 }
 
+bool nameExists(std::string name)
+{
+  return (outterScope().varExists(name) || outterScope().funcExists(name));
+}
+
 bool operation()
 {
   std::string operationType;
   std::string codeLine;
   if (getToken() == items::IDENT)
-  {        
-    if (!( 
-            outterScope().varExists(getTInfo()) ||
-            outterScope().funcExists(getTInfo())))
-      operationType = outterScope().getType(getTInfo());
-    incPos();
-    if (getToken() == items::DELIM && getTInfo() == "=")
-    {
-      bool needsIdentifier = true;
-      while (getToken() != items::NEW_LINE)
-      {
-        wpe(tts(getToken()));
-        if (needsIdentifier)
-          if (!(getToken() == items::IDENT))
-            wpe("\"Identifizierer\" oder \"Dateiende\" erwartet, stattdessen " + tts(getToken()) + " bekommen");
-          else
-            if (outterScope().varExists(getTInfo()))
-              codeLine += getTInfo();
-            else if (outterScope().funcExists(getTInfo()))
-              codeLine += handleFunctionCall();
-            else
-              wpe("Identifizierer " + getTInfo() + " konnte nicht gefunden werden!");
-        else
-          if (getToken() == items::DELIM)
-            wpe("Operator erwartet, stattdessen " + tts(getToken()) + " bekommen.");
-        incPos();
-        if (getToken() == items::VOID)
-          break;
-        needsIdentifier = !needsIdentifier;
-      }
-    }
-    else
-    {
-      return false;
-      positionInLine--;
-    }
     return false;
+
+  if (nameExists(getTInfo()))
+    operationType = outterScope().getType(getTInfo());
+
+  incPos();
+  if (getToken() != items::DELIM || getTInfo() != "=")
+  {
+    return false;
+    positionInLine--;
+  }
+  
+  bool needsIdentifier = true;
+  while (getToken() != items::NEW_LINE)
+  {
+    wpe(tts(getToken()));
+    if (needsIdentifier)
+      if (!(getToken() == items::IDENT))
+        wpe("\"Identifizierer\" oder \"Dateiende\" erwartet, stattdessen " + tts(getToken()) + " bekommen");
+      else if (outterScope().varExists(getTInfo()))
+        codeLine += getTInfo();
+      else if (outterScope().funcExists(getTInfo()))
+        codeLine += handleFunctionCall();
+      else
+        wpe("Identifizierer " + getTInfo() + " konnte nicht gefunden werden!");
+    else if (getToken() == items::DELIM)
+      wpe("Operator erwartet, stattdessen " + tts(getToken()) + " bekommen.");
+    incPos();
+    if (getToken() == items::VOID)
+      break;
+    needsIdentifier = !needsIdentifier;
   }
 }
 
@@ -138,7 +137,7 @@ bool variableDefinition()
   variable currVar = parseVariable();
   std::string code = "";
   if (currVar.isInit == true)
-  { 
+  {
     code += currVar.type;
     code += " " + currVar.name;
     outterScope().addVar(std::make_pair(currVar.name, currVar.type));
@@ -153,7 +152,8 @@ bool variableDefinition()
   return true;
 }
 
-void variablesInFunctionDecl (std::vector<std::tuple<std::string, std::string>> &variables) {
+void variablesInFunctionDecl(std::vector<std::tuple<std::string, std::string>> &variables)
+{
   while (true)
   {
     variable currentVar;
@@ -167,9 +167,10 @@ void variablesInFunctionDecl (std::vector<std::tuple<std::string, std::string>> 
     }
     else if (getTInfo() == ")")
       break;
-    else {
+    else
+    {
       wpe("\")\" oder \",\" erwartet, statdessen " + tts(getToken()) + " bekommen.");
-      break; 
+      break;
     }
   }
 }
@@ -177,8 +178,8 @@ void variablesInFunctionDecl (std::vector<std::tuple<std::string, std::string>> 
 bool functionDefinition()
 {
   if (!(getToken() == items::FUNCTION_1))
-    return false; 
-  std::string functionName;                                    
+    return false;
+  std::string functionName;
   std::vector<std::tuple<std::string, std::string>> variables;
   std::string funcReturnType;
 
@@ -260,11 +261,7 @@ void beginOfFile()
           wpe("\"Neue Zeile\" erwartet, stattdessen " + tts(getToken()) + " bekommen.");
     }
     else
-    {
       wpe("Unerwarteterweise " + tts(getToken()) + " bekommen.");
-      hasError = true;
-    }
-    std::cout << "PLT" << positionInLexerToken << std::endl;
   }
   if (!hasMainFunction)
     wpe("Keine anfangs-funktion im Programm gefunden.");

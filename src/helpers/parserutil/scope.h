@@ -49,8 +49,10 @@ struct scope
 	{
 		if (varExists(name))
 			return varType(name);
-		else
+		else if (funcExists(name))
 			return funcType(name);
+		else 
+			throw "Neither Var nor Func name Found -- internal problem";
 	}
 	std::string varType(std::string name)
 	{ //assuming the var exists
